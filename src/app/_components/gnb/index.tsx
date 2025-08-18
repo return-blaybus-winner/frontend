@@ -1,3 +1,4 @@
+import UserMenu from "@/app/_components/gnb/user-menu";
 import Logo from "@/app/_components/logo";
 import MenuIcon from "@/app/_icons/menu-icon";
 import Link from "next/link";
@@ -16,12 +17,7 @@ export default function GNB() {
           <Link href="/artist">예술가 찾기</Link>
           <Link href="/company">기업찾기</Link>
         </nav>
-
-        <Link className="flex items-center space-x-1" href="/login">
-          <span>회원가입</span>
-          <span>/</span>
-          <span>로그인</span>
-        </Link>
+        <UserMenu />
       </div>
     </header>
   );
