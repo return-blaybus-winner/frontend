@@ -22,8 +22,8 @@ export function CategoryHoverCard() {
   return (
     <>
       <HoverCard
-        openDelay={0}
-        closeDelay={0}
+        openDelay={200}
+        closeDelay={200}
         open={open}
         onOpenChange={setOpen}
       >
@@ -32,6 +32,7 @@ export function CategoryHoverCard() {
           onClick={(e) => {
             e.preventDefault();
             router.push("/projects");
+            setOpen(false);
           }}
         >
           <MenuIcon />
