@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -19,7 +18,7 @@ const mockUserProjects = {
       budget: "400만원",
       client: "테크 스타트업 A",
       progress: 60,
-      category: "일러스트"
+      category: "일러스트",
     },
     {
       id: 2,
@@ -30,8 +29,8 @@ const mockUserProjects = {
       budget: "250만원",
       client: "카페 브랜드 B",
       progress: 0,
-      category: "도예"
-    }
+      category: "도예",
+    },
   ],
   completed: [
     {
@@ -45,7 +44,7 @@ const mockUserProjects = {
       progress: 100,
       category: "일러스트",
       rating: 4.8,
-      review: "정말 만족스러운 작업이었습니다!"
+      review: "정말 만족스러운 작업이었습니다!",
     },
     {
       id: 4,
@@ -58,8 +57,8 @@ const mockUserProjects = {
       progress: 100,
       category: "디자인",
       rating: 5.0,
-      review: "창의적이고 완성도 높은 작업이었습니다."
-    }
+      review: "창의적이고 완성도 높은 작업이었습니다.",
+    },
   ],
   applications: [
     {
@@ -69,7 +68,7 @@ const mockUserProjects = {
       status: "검토중",
       budget: "500만원",
       company: "친환경 스타트업 E",
-      category: "브랜딩"
+      category: "브랜딩",
     },
     {
       id: 6,
@@ -78,25 +77,35 @@ const mockUserProjects = {
       status: "미선정",
       budget: "150만원",
       company: "게임 회사 F",
-      category: "UI/UX"
-    }
-  ]
+      category: "UI/UX",
+    },
+  ],
 };
 
 const StatusBadge = ({ status }: { status: string }) => {
   const getStatusColor = (status: string) => {
     switch (status) {
-      case "진행중": return "bg-blue-100 text-blue-800";
-      case "대기중": return "bg-yellow-100 text-yellow-800";
-      case "완료": return "bg-green-100 text-green-800";
-      case "검토중": return "bg-orange-100 text-orange-800";
-      case "미선정": return "bg-red-100 text-red-800";
-      default: return "bg-gray-100 text-gray-800";
+      case "진행중":
+        return "bg-blue-100 text-blue-800";
+      case "대기중":
+        return "bg-yellow-100 text-yellow-800";
+      case "완료":
+        return "bg-green-100 text-green-800";
+      case "검토중":
+        return "bg-orange-100 text-orange-800";
+      case "미선정":
+        return "bg-red-100 text-red-800";
+      default:
+        return "bg-gray-100 text-gray-800";
     }
   };
 
   return (
-    <span className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(status)}`}>
+    <span
+      className={`px-2 py-1 rounded-full text-xs font-medium ${getStatusColor(
+        status
+      )}`}
+    >
       {status}
     </span>
   );
@@ -107,37 +116,49 @@ export default function MyProjectsPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
       <div className="container mx-auto px-4 py-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-3xl font-bold mb-2">내 프로젝트</h1>
-            <p className="text-gray-600">진행 중인 프로젝트와 완료된 작업을 관리하세요</p>
+            <p className="text-gray-600">
+              진행 중인 프로젝트와 완료된 작업을 관리하세요
+            </p>
           </div>
           <Button asChild>
             <Link href="/projects">
-              <Plus className="w-4 h-4 mr-2" />
-              새 프로젝트 찾기
+              <Plus className="w-4 h-4 mr-2" />새 프로젝트 찾기
             </Link>
           </Button>
         </div>
 
         <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
           <TabsList className="grid w-full grid-cols-3">
-            <TabsTrigger value="active">진행중 ({mockUserProjects.active.length})</TabsTrigger>
-            <TabsTrigger value="completed">완료 ({mockUserProjects.completed.length})</TabsTrigger>
-            <TabsTrigger value="applications">지원현황 ({mockUserProjects.applications.length})</TabsTrigger>
+            <TabsTrigger value="active">
+              진행중 ({mockUserProjects.active.length})
+            </TabsTrigger>
+            <TabsTrigger value="completed">
+              완료 ({mockUserProjects.completed.length})
+            </TabsTrigger>
+            <TabsTrigger value="applications">
+              지원현황 ({mockUserProjects.applications.length})
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="active" className="mt-6">
             <div className="space-y-4">
               {mockUserProjects.active.map((project) => (
-                <div key={project.id} className="bg-white p-6 rounded-lg shadow-sm">
+                <div
+                  key={project.id}
+                  className="bg-white p-6 rounded-lg shadow-sm"
+                >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                      <p className="text-gray-600 mb-2">클라이언트: {project.client}</p>
+                      <h3 className="text-xl font-semibold mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-600 mb-2">
+                        클라이언트: {project.client}
+                      </p>
                       <Badge variant="secondary">{project.category}</Badge>
                     </div>
                     <StatusBadge status={project.status} />
@@ -160,8 +181,8 @@ export default function MyProjectsPage() {
                   {project.progress > 0 && (
                     <div className="mb-4">
                       <div className="w-full bg-gray-200 rounded-full h-2">
-                        <div 
-                          className="bg-blue-600 h-2 rounded-full" 
+                        <div
+                          className="bg-blue-600 h-2 rounded-full"
                           style={{ width: `${project.progress}%` }}
                         ></div>
                       </div>
@@ -174,7 +195,9 @@ export default function MyProjectsPage() {
                     </Button>
                     {project.status === "진행중" && (
                       <Button size="sm" asChild>
-                        <Link href={`/projects/${project.id}/workspace`}>작업공간</Link>
+                        <Link href={`/projects/${project.id}/workspace`}>
+                          작업공간
+                        </Link>
                       </Button>
                     )}
                   </div>
@@ -186,11 +209,18 @@ export default function MyProjectsPage() {
           <TabsContent value="completed" className="mt-6">
             <div className="space-y-4">
               {mockUserProjects.completed.map((project) => (
-                <div key={project.id} className="bg-white p-6 rounded-lg shadow-sm">
+                <div
+                  key={project.id}
+                  className="bg-white p-6 rounded-lg shadow-sm"
+                >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-                      <p className="text-gray-600 mb-2">클라이언트: {project.client}</p>
+                      <h3 className="text-xl font-semibold mb-2">
+                        {project.title}
+                      </h3>
+                      <p className="text-gray-600 mb-2">
+                        클라이언트: {project.client}
+                      </p>
                       <Badge variant="secondary">{project.category}</Badge>
                     </div>
                     <StatusBadge status={project.status} />
@@ -212,7 +242,9 @@ export default function MyProjectsPage() {
 
                   {project.review && (
                     <div className="bg-gray-50 p-4 rounded-lg mb-4">
-                      <p className="text-sm text-gray-700">&ldquo;{project.review}&rdquo;</p>
+                      <p className="text-sm text-gray-700">
+                        &ldquo;{project.review}&rdquo;
+                      </p>
                     </div>
                   )}
 
@@ -221,7 +253,9 @@ export default function MyProjectsPage() {
                       <Link href={`/projects/${project.id}`}>상세보기</Link>
                     </Button>
                     <Button variant="outline" size="sm" asChild>
-                      <Link href={`/projects/${project.id}/portfolio`}>포트폴리오 추가</Link>
+                      <Link href={`/projects/${project.id}/portfolio`}>
+                        포트폴리오 추가
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -232,11 +266,18 @@ export default function MyProjectsPage() {
           <TabsContent value="applications" className="mt-6">
             <div className="space-y-4">
               {mockUserProjects.applications.map((application) => (
-                <div key={application.id} className="bg-white p-6 rounded-lg shadow-sm">
+                <div
+                  key={application.id}
+                  className="bg-white p-6 rounded-lg shadow-sm"
+                >
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-xl font-semibold mb-2">{application.title}</h3>
-                      <p className="text-gray-600 mb-2">기업: {application.company}</p>
+                      <h3 className="text-xl font-semibold mb-2">
+                        {application.title}
+                      </h3>
+                      <p className="text-gray-600 mb-2">
+                        기업: {application.company}
+                      </p>
                       <Badge variant="secondary">{application.category}</Badge>
                     </div>
                     <StatusBadge status={application.status} />
@@ -255,7 +296,9 @@ export default function MyProjectsPage() {
 
                   <div className="flex gap-2">
                     <Button variant="outline" size="sm" asChild>
-                      <Link href={`/projects/${application.id}`}>프로젝트 보기</Link>
+                      <Link href={`/projects/${application.id}`}>
+                        프로젝트 보기
+                      </Link>
                     </Button>
                     {application.status === "검토중" && (
                       <Button variant="outline" size="sm">

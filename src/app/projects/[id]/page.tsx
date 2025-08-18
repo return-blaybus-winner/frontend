@@ -2,7 +2,6 @@
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
-import Header from "@/components/Header";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ArrowLeft } from "lucide-react";
@@ -10,7 +9,8 @@ import { ArrowLeft } from "lucide-react";
 const mockProject = {
   id: 1,
   title: "브랜드 일러스트 제작",
-  description: "신제품 론칭을 위한 일러스트 디자인 작업입니다. 모던하고 세련된 스타일로 브랜드 아이덴티티를 표현할 수 있는 일러스트를 제작해주세요.",
+  description:
+    "신제품 론칭을 위한 일러스트 디자인 작업입니다. 모던하고 세련된 스타일로 브랜드 아이덴티티를 표현할 수 있는 일러스트를 제작해주세요.",
   detailedDescription: `
     이번 프로젝트는 새로운 테크 제품의 론칭을 위한 브랜딩 일러스트 제작 프로젝트입니다.
     
@@ -29,7 +29,7 @@ const mockProject = {
     name: "테크 스타트업 A",
     description: "혁신적인 IoT 솔루션을 개발하는 스타트업",
     employees: "10-50명",
-    industry: "기술/IT"
+    industry: "기술/IT",
   },
   category: "일러스트",
   budget: "300-500만원",
@@ -41,23 +41,21 @@ const mockProject = {
     "일러스트 분야 3년 이상 경험",
     "브랜딩 프로젝트 포트폴리오 보유",
     "Adobe Illustrator 숙련도",
-    "커뮤니케이션 원활한 분"
+    "커뮤니케이션 원활한 분",
   ],
   deliverables: [
     "메인 브랜드 일러스트 (3-5개 컨셉)",
     "웹/모바일용 사이즈별 파일",
     "인쇄물용 고해상도 파일",
-    "사용 가이드라인 문서"
-  ]
+    "사용 가이드라인 문서",
+  ],
 };
 
 export default function ProjectDetailPage() {
   const params = useParams();
-  
+
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
       <div className="container mx-auto px-4 py-8">
         <div className="mb-6">
           <Button variant="ghost" asChild className="mb-4">
@@ -66,21 +64,21 @@ export default function ProjectDetailPage() {
               프로젝트 목록으로
             </Link>
           </Button>
-          
+
           <div className="bg-white p-8 rounded-lg shadow-sm">
             <div className="flex justify-between items-start mb-6">
               <div>
                 <h1 className="text-3xl font-bold mb-2">{mockProject.title}</h1>
-                <p className="text-gray-600 text-lg mb-4">{mockProject.description}</p>
+                <p className="text-gray-600 text-lg mb-4">
+                  {mockProject.description}
+                </p>
                 <div className="flex items-center gap-4 text-sm text-gray-500">
                   <span>by {mockProject.company.name}</span>
                   <Badge variant="secondary">{mockProject.category}</Badge>
                 </div>
               </div>
               <Button size="lg" asChild>
-                <Link href={`/projects/${params.id}/apply`}>
-                  지원하기
-                </Link>
+                <Link href={`/projects/${params.id}/apply`}>지원하기</Link>
               </Button>
             </div>
 
@@ -112,7 +110,9 @@ export default function ProjectDetailPage() {
                 <div className="space-y-3">
                   <div>
                     <h3 className="font-medium">{mockProject.company.name}</h3>
-                    <p className="text-gray-600 text-sm">{mockProject.company.description}</p>
+                    <p className="text-gray-600 text-sm">
+                      {mockProject.company.description}
+                    </p>
                   </div>
                   <div className="flex justify-between">
                     <span className="font-medium">직원 수:</span>
@@ -163,7 +163,9 @@ export default function ProjectDetailPage() {
               <h2 className="text-xl font-semibold mb-4">태그</h2>
               <div className="flex flex-wrap gap-2">
                 {mockProject.tags.map((tag, index) => (
-                  <Badge key={index} variant="outline">{tag}</Badge>
+                  <Badge key={index} variant="outline">
+                    {tag}
+                  </Badge>
                 ))}
               </div>
             </div>
@@ -173,9 +175,7 @@ export default function ProjectDetailPage() {
                 <Link href="/projects">다른 프로젝트 보기</Link>
               </Button>
               <Button size="lg" asChild>
-                <Link href={`/projects/${params.id}/apply`}>
-                  지원하기
-                </Link>
+                <Link href={`/projects/${params.id}/apply`}>지원하기</Link>
               </Button>
             </div>
           </div>

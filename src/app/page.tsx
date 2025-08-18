@@ -1,12 +1,9 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/Header";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
-      
       {/* Hero Section */}
       <section className="py-20 bg-gradient-to-b from-blue-50 to-white">
         <div className="container mx-auto px-4 text-center">
@@ -58,18 +55,24 @@ export default function Home() {
           <h2 className="text-3xl font-bold text-center mb-12">주요 기능</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <div className="bg-white p-8 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">기업을 위한 프로젝트 추천</h3>
+              <h3 className="text-xl font-semibold mb-4">
+                기업을 위한 프로젝트 추천
+              </h3>
               <p className="text-gray-600 mb-6">
-                AI 기반 매칭 시스템으로 기업의 요구사항에 맞는 최적의 아티스트를 추천합니다.
+                AI 기반 매칭 시스템으로 기업의 요구사항에 맞는 최적의 아티스트를
+                추천합니다.
               </p>
               <Button variant="outline" asChild>
                 <Link href="/projects">더 알아보기</Link>
               </Button>
             </div>
             <div className="bg-white p-8 rounded-lg shadow-sm">
-              <h3 className="text-xl font-semibold mb-4">개인을 위한 아티스트 추천</h3>
+              <h3 className="text-xl font-semibold mb-4">
+                개인을 위한 아티스트 추천
+              </h3>
               <p className="text-gray-600 mb-6">
-                개인의 취향과 선호도를 분석하여 맞춤형 아티스트와 작품을 추천합니다.
+                개인의 취향과 선호도를 분석하여 맞춤형 아티스트와 작품을
+                추천합니다.
               </p>
               <Button variant="outline" asChild>
                 <Link href="/artists">더 알아보기</Link>
@@ -92,25 +95,43 @@ export default function Home() {
             <div>
               <h4 className="font-semibold mb-4">서비스</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/projects">프로젝트 찾기</Link></li>
-                <li><Link href="/artists">아티스트 찾기</Link></li>
-                <li><Link href="/my-projects">내 프로젝트</Link></li>
+                <li>
+                  <Link href="/projects">프로젝트 찾기</Link>
+                </li>
+                <li>
+                  <Link href="/artists">아티스트 찾기</Link>
+                </li>
+                <li>
+                  <Link href="/my-projects">내 프로젝트</Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">고객지원</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/help">도움말</Link></li>
-                <li><Link href="/contact">문의하기</Link></li>
-                <li><Link href="/faq">자주 묻는 질문</Link></li>
+                <li>
+                  <Link href="/help">도움말</Link>
+                </li>
+                <li>
+                  <Link href="/contact">문의하기</Link>
+                </li>
+                <li>
+                  <Link href="/faq">자주 묻는 질문</Link>
+                </li>
               </ul>
             </div>
             <div>
               <h4 className="font-semibold mb-4">회사</h4>
               <ul className="space-y-2 text-gray-400">
-                <li><Link href="/about">회사소개</Link></li>
-                <li><Link href="/careers">채용</Link></li>
-                <li><Link href="/press">보도자료</Link></li>
+                <li>
+                  <Link href="/about">회사소개</Link>
+                </li>
+                <li>
+                  <Link href="/careers">채용</Link>
+                </li>
+                <li>
+                  <Link href="/press">보도자료</Link>
+                </li>
               </ul>
             </div>
           </div>
