@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import GNB from "@/app/_components/gnb";
+import Footer from "@/app/_components/footer";
 
 const pretendard = localFont({
   src: "./PretendardVariable.woff2",
@@ -25,6 +26,7 @@ export default function RootLayout({
       <body className={`${pretendard.variable} antialiased`}>
         <GNB />
         <main>{children}</main>
+        <Footer />
       </body>
     </html>
   );

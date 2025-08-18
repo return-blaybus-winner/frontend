@@ -81,65 +81,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-            <div>
-              <h3 className="text-xl font-bold mb-4">Movetum</h3>
-              <p className="text-gray-400">
-                아티스트와 기업을 연결하는 혁신적인 플랫폼
-              </p>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">서비스</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/projects">프로젝트 찾기</Link>
-                </li>
-                <li>
-                  <Link href="/artists">아티스트 찾기</Link>
-                </li>
-                <li>
-                  <Link href="/my-projects">내 프로젝트</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">고객지원</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/help">도움말</Link>
-                </li>
-                <li>
-                  <Link href="/contact">문의하기</Link>
-                </li>
-                <li>
-                  <Link href="/faq">자주 묻는 질문</Link>
-                </li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-semibold mb-4">회사</h4>
-              <ul className="space-y-2 text-gray-400">
-                <li>
-                  <Link href="/about">회사소개</Link>
-                </li>
-                <li>
-                  <Link href="/careers">채용</Link>
-                </li>
-                <li>
-                  <Link href="/press">보도자료</Link>
-                </li>
-              </ul>
-            </div>
-          </div>
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2024 Movetum. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
     </div>
   );
 }
