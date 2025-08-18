@@ -8,13 +8,16 @@ import Link from "next/link";
 
 export default function UserMenu() {
   const isLoggedIn = true; // Replace with actual authentication logic
+  const isCompany = true; // Replace with actual company logic
 
   return (
     <>
       <If condition={isLoggedIn}>
-        <Button variant="brand" size="default" className="rounded-full">
-          프로젝트 등록하기
-        </Button>
+        <If condition={isCompany}>
+          <Button variant="brand" size="default" className="rounded-full">
+            프로젝트 등록하기
+          </Button>
+        </If>
         <div className="flex items-center gap-6 pl-6">
           <Button variant="ghost" className="rounded-full">
             <ChatIcon />
