@@ -64,7 +64,6 @@ export function CompanySignUpForm() {
 
                 <FormControl>
                   <Input
-                    type="url"
                     placeholder="회사 로고 / 대표 이미지 URL을 입력하세요"
                     className="mt-1"
                     {...field}
