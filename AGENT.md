@@ -19,7 +19,7 @@
 - **컴포넌트 설계**: 모든 UI 컴포넌트는 Radix UI의 Slot 패턴과 Tailwind 기반 스타일을 조합. 예시: `Button`은 `asChild`로 Slot 지원.
 - **클래스 병합**: `src/lib/utils.ts`의 `cn` 함수로 `clsx`와 `tailwind-merge`를 결합해 중복 클래스 제거.
 - **데이터 흐름**: 서비스 IA는 `IA.md` 참고. 프로젝트/아티스트 탐색, 매칭, 마이페이지 등은 사용자 유형에 따라 분기.
-- **파일 구조**: 모든 파일은 kebab-case로 명명.
+- **파일 구조**: 모든 파일 및 폴더 이름은 `kebab-case` 로 작성한다.
 
 ## 통합 및 외부 의존성
 
