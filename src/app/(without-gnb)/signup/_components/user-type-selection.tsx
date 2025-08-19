@@ -1,4 +1,6 @@
 import { UserRole } from "@/app/_model/user";
+import ArtistSVG from "@/app/_svg/artist";
+import CompanySVG from "@/app/_svg/company";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -20,31 +22,27 @@ export function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
       <button
         onClick={() => handleSelect(UserRole.Company)}
         className={cn(
-          "p-6 border font-semibold rounded-[10px] text-base transition-all text-left",
+          "flex flex-col items-center py-8 border font-semibold rounded-[10px] text-base transition-all text-left",
           pendingType === UserRole.Company
             ? "border-primary"
             : "border-gray-300 hover:border-primary/50"
         )}
       >
+        <CompanySVG />
         <div className="text-lg font-medium text-gray-900">기업 회원</div>
-        <div className="text-sm text-gray-600 mt-2">
-          프로젝트를 의뢰하고 아티스트와 협업하세요
-        </div>
       </button>
 
       <button
         onClick={() => handleSelect(UserRole.Artist)}
         className={cn(
-          "p-6 border font-semibold rounded-[10px] text-base transition-all text-left",
+          "flex flex-col items-center py-8 border font-semibold rounded-[10px] text-base transition-all text-left",
           pendingType === UserRole.Artist
             ? "border-primary"
             : "border-gray-300 hover:border-primary/50"
         )}
       >
+        <ArtistSVG />
         <div className="text-lg font-medium text-gray-900">아티스트</div>
-        <div className="text-sm text-gray-600 mt-2">
-          작품을 공유하고 프로젝트 기회를 찾아보세요
-        </div>
       </button>
 
       <Button

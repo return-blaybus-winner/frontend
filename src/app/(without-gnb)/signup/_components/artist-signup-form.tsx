@@ -1,12 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Checkbox } from "@/components/ui/checkbox";
 import {
   Select,
   SelectContent,
@@ -14,7 +11,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
   FormControl,
@@ -23,352 +19,256 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Eye, EyeOff } from "lucide-react";
-import { artistSchema, type ArtistFormValues } from "../_schemas";
+import {
+  ArtistFormValues,
+  artistSchema,
+} from "@/app/(without-gnb)/signup/_schemas";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState } from "react";
+import SwitchCase from "@/components/utils/switch-case";
+import If from "@/components/utils/if";
+import { useRouter } from "next/navigation";
+import { UserRole } from "@/app/_model/user";
 
-interface ArtistSignUpFormProps {
-  onBack: () => void;
+enum SignUpPhase {
+  Basic = "basic",
+  Portfolio = "portfolio",
 }
 
-export function ArtistSignUpForm({ onBack }: ArtistSignUpFormProps) {
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+export function ArtistSignUpForm() {
+  const router = useRouter();
+
+  const [phase, setPhase] = useState<SignUpPhase>(SignUpPhase.Basic);
 
   const form = useForm<ArtistFormValues>({
     resolver: zodResolver(artistSchema),
     defaultValues: {
-      email: "",
-      password: "",
-      confirmPassword: "",
+      profileImage: "",
       name: "",
-      phone: "",
-      category: "",
-      experience: "",
-      bio: "",
-      agreeTerms: false,
-      agreePrivacy: false,
-      agreeMarketing: false,
+      activeArea: "",
+      portfolioImage: "",
+      portfolio: "",
     },
   });
 
   const onSubmit = (values: ArtistFormValues) => {
+    if (phase === SignUpPhase.Basic) {
+      setPhase(SignUpPhase.Portfolio);
+      return;
+    }
     console.log("Artist sign up:", values);
     // 실제 회원가입 로직은 여기에 구현
+
+    router.replace("/signup/success/?from=" + UserRole.Artist);
   };
 
   return (
     <Form {...form}>
-      <form className="space-y-6" onSubmit={form.handleSubmit(onSubmit)}>
-        <div className="flex items-center justify-between">
-          <h3 className="text-xl font-semibold text-gray-900">
-            아티스트 회원가입
-          </h3>
-          <Button type="button" variant="outline" onClick={onBack}>
-            뒤로가기
+      <form className="space-y-10" onSubmit={form.handleSubmit(onSubmit)}>
+        <SwitchCase
+          value={phase}
+          caseBy={{
+            [SignUpPhase.Basic]: (
+              <div>
+                <h1 className="font-semibold text-gray-950 text-[28px] whitespace-pre-line">{`아티스트 회원으로 가입하시나요?`}</h1>
+                <p className="mt-3 font-medium text-base text-gray-600">
+                  무브텀과 함께 일상을 바꾸는 창작을 시작해보세요.
+                </p>
+              </div>
+            ),
+            [SignUpPhase.Portfolio]: (
+              <div>
+                <h1 className="font-semibold text-gray-950 text-[28px] whitespace-pre-line">{`포트폴리오를 등록해주세요`}</h1>
+                <p className="mt-3 font-medium text-base text-gray-600">
+                  포트폴리오가 있으면 매칭 성사 확률이 높아져요!
+                </p>
+              </div>
+            ),
+          }}
+        />
+
+        <SwitchCase
+          value={phase}
+          caseBy={{
+            [SignUpPhase.Basic]: <BaseFormFields form={form} />,
+            [SignUpPhase.Portfolio]: <PortfolioFields form={form} />,
+          }}
+        />
+
+        <div className="flex gap-5">
+          <If condition={phase === SignUpPhase.Portfolio}>
+            <Button
+              type="submit"
+              variant="outline"
+              disabled={!form.formState.isValid}
+              size="lg"
+              className="w-[161px]"
+            >
+              나중에 등록할게요
+            </Button>
+          </If>
+          <Button
+            type="submit"
+            variant="brand"
+            disabled={!form.formState.isValid}
+            size="lg"
+            className="flex-1"
+          >
+            {phase === SignUpPhase.Basic ? "다음" : "완료"}
           </Button>
         </div>
-
-        {/* Basic Info */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>이메일 *</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="이메일을 입력하세요"
-                    className="mt-1"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="name"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>이름 *</FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="이름을 입력하세요"
-                    className="mt-1"
-                    {...field}
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>비밀번호 *</FormLabel>
-                <FormControl>
-                  <div className="relative mt-1">
-                    <Input
-                      type={showPassword ? "text" : "password"}
-                      placeholder="비밀번호를 입력하세요"
-                      className="pr-10"
-                      {...field}
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                      onClick={() => setShowPassword(!showPassword)}
-                    >
-                      {showPassword ? (
-                        <EyeOff className="h-4 w-4 text-gray-400" />
-                      ) : (
-                        <Eye className="h-4 w-4 text-gray-400" />
-                      )}
-                    </button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="confirmPassword"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>비밀번호 확인 *</FormLabel>
-                <FormControl>
-                  <div className="relative mt-1">
-                    <Input
-                      type={showConfirmPassword ? "text" : "password"}
-                      placeholder="비밀번호를 다시 입력하세요"
-                      className="pr-10"
-                      {...field}
-                    />
-                    <button
-                      type="button"
-                      className="absolute inset-y-0 right-0 pr-3 flex items-center"
-                      onClick={() =>
-                        setShowConfirmPassword(!showConfirmPassword)
-                      }
-                    >
-                      {showConfirmPassword ? (
-                        <EyeOff className="h-4 w-4 text-gray-400" />
-                      ) : (
-                        <Eye className="h-4 w-4 text-gray-400" />
-                      )}
-                    </button>
-                  </div>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <FormField
-          control={form.control}
-          name="phone"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>연락처</FormLabel>
-              <FormControl>
-                <Input
-                  type="tel"
-                  placeholder="연락처를 입력하세요"
-                  className="mt-1"
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Artist specific fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FormField
-            control={form.control}
-            name="category"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>전문 분야 *</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="전문 분야를 선택하세요" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="illustration">일러스트</SelectItem>
-                    <SelectItem value="pottery">도예</SelectItem>
-                    <SelectItem value="craft">공예</SelectItem>
-                    <SelectItem value="painting">회화</SelectItem>
-                    <SelectItem value="sculpture">조각</SelectItem>
-                    <SelectItem value="design">디자인</SelectItem>
-                    <SelectItem value="other">기타</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="experience"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>경력</FormLabel>
-                <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
-                >
-                  <FormControl>
-                    <SelectTrigger className="mt-1">
-                      <SelectValue placeholder="경력을 선택하세요" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent>
-                    <SelectItem value="beginner">1년 미만</SelectItem>
-                    <SelectItem value="1-3">1-3년</SelectItem>
-                    <SelectItem value="4-7">4-7년</SelectItem>
-                    <SelectItem value="8+">8년 이상</SelectItem>
-                  </SelectContent>
-                </Select>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <FormField
-          control={form.control}
-          name="bio"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>자기소개</FormLabel>
-              <FormControl>
-                <Textarea
-                  placeholder="자신의 작업 스타일, 경험, 전문성 등을 간단히 소개해주세요"
-                  className="mt-1"
-                  rows={4}
-                  {...field}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        {/* Terms and Conditions */}
-        <div className="space-y-4 pt-6 border-t">
-          <h4 className="text-lg font-medium">약관 동의</h4>
-          <div className="space-y-3">
-            <FormField
-              control={form.control}
-              name="agreeTerms"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel className="font-medium">
-                      이용약관 동의 (필수)
-                    </FormLabel>
-                    <p className="text-sm text-gray-600">
-                      Movetum 서비스 이용약관에 동의합니다.{" "}
-                      <Link
-                        href="/terms"
-                        className="text-blue-600 hover:underline"
-                      >
-                        자세히 보기
-                      </Link>
-                    </p>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="agreePrivacy"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel className="font-medium">
-                      개인정보 처리방침 동의 (필수)
-                    </FormLabel>
-                    <p className="text-sm text-gray-600">
-                      개인정보 수집 및 이용에 동의합니다.{" "}
-                      <Link
-                        href="/privacy"
-                        className="text-blue-600 hover:underline"
-                      >
-                        자세히 보기
-                      </Link>
-                    </p>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="agreeMarketing"
-              render={({ field }) => (
-                <FormItem className="flex flex-row items-start space-x-3 space-y-0">
-                  <FormControl>
-                    <Checkbox
-                      checked={field.value}
-                      onCheckedChange={field.onChange}
-                    />
-                  </FormControl>
-                  <div className="space-y-1 leading-none">
-                    <FormLabel className="font-medium">
-                      마케팅 정보 수신 동의 (선택)
-                    </FormLabel>
-                    <p className="text-sm text-gray-600">
-                      새로운 프로젝트, 이벤트 등의 마케팅 정보를 이메일로
-                      받아보시겠습니까?
-                    </p>
-                    <FormMessage />
-                  </div>
-                </FormItem>
-              )}
-            />
-          </div>
-        </div>
-
-        <Button type="submit" className="w-full">
-          회원가입
-        </Button>
       </form>
     </Form>
+  );
+}
+
+interface FieldsProps {
+  form: UseFormReturn<ArtistFormValues>;
+}
+
+function BaseFormFields({ form }: FieldsProps) {
+  return (
+    <div className="space-y-5">
+      <FormField
+        control={form.control}
+        name="profileImage"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              <span>프로필 이미지</span>
+              <span className="text-red-500 pl-0.5">*</span>
+            </FormLabel>
+            {field.value && (
+              <Avatar className="size-[60px]">
+                <AvatarImage src={field.value} />
+                <AvatarFallback></AvatarFallback>
+              </Avatar>
+            )}
+            <FormControl>
+              <Input
+                placeholder="프로필 이미지 URL을 입력하세요"
+                className="mt-1"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="name"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>
+              <span>닉네임</span>
+              <span className="text-red-500 pl-0.5">*</span>
+            </FormLabel>
+            <FormControl>
+              <Input
+                placeholder="이름을 입력하세요"
+                className="mt-1"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="activeArea"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>활동 지역 *</FormLabel>
+            <ActiveAreaSelect value={field.value} onChange={field.onChange} />
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  );
+}
+
+function PortfolioFields({ form }: FieldsProps) {
+  return (
+    <div className="space-y-5">
+      <FormField
+        control={form.control}
+        name="portfolioImage"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>포트폴리오 대표 이미지</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="포트폴리오 이미지 URL을 입력하세요"
+                className="mt-1"
+                {...field}
+              />
+            </FormControl>
+            <p className="text-sm text-gray-600">
+              자신을 가장 잘 드러낼 수 있는 대표 작업물을 올려주세요.
+            </p>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+
+      <FormField
+        control={form.control}
+        name="portfolio"
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel>포트폴리오 링크</FormLabel>
+            <FormControl>
+              <Input
+                placeholder="포트폴리오 URL을 입력하세요"
+                className="mt-1"
+                {...field}
+              />
+            </FormControl>
+            <FormMessage />
+          </FormItem>
+        )}
+      />
+    </div>
+  );
+}
+
+interface ActiveAreaSelectProps {
+  value: string;
+  onChange: (value: string) => void;
+}
+
+function ActiveAreaSelect({ value, onChange }: ActiveAreaSelectProps) {
+  return (
+    <Select onValueChange={onChange} defaultValue={value}>
+      <FormControl>
+        <SelectTrigger className="w-full">
+          <SelectValue placeholder="활동 지역을 선택하세요" />
+        </SelectTrigger>
+      </FormControl>
+      <SelectContent>
+        <SelectItem value="seoul">서울</SelectItem>
+        <SelectItem value="gyeonggi">경기</SelectItem>
+        <SelectItem value="incheon">인천</SelectItem>
+        <SelectItem value="busan">부산</SelectItem>
+        <SelectItem value="daegu">대구</SelectItem>
+        <SelectItem value="daejeon">대전</SelectItem>
+        <SelectItem value="gwangju">광주</SelectItem>
+        <SelectItem value="ulsan">울산</SelectItem>
+        <SelectItem value="sejong">세종</SelectItem>
+        <SelectItem value="gangwon">강원</SelectItem>
+        <SelectItem value="chungbuk">충북</SelectItem>
+        <SelectItem value="chungnam">충남</SelectItem>
+        <SelectItem value="jeonbuk">전북</SelectItem>
+        <SelectItem value="jeonnam">전남</SelectItem>
+        <SelectItem value="gyeongbuk">경북</SelectItem>
+        <SelectItem value="gyeongnam">경남</SelectItem>
+        <SelectItem value="jeju">제주</SelectItem>
+      </SelectContent>
+    </Select>
   );
 }

@@ -5,7 +5,7 @@ import React from "react";
 
 export default function Header() {
   return (
-    <Container className="h-[81px] flex flex-row items-center">
+    <Container className="h-[81px] flex flex-row items-center px-5">
       <Link href="/" className="flex items-center gap-4 hover:text-gray-700">
         <ArrowLeftIcon />
         <span className="text-lg font-semibold">홈으로 돌아가기</span>
