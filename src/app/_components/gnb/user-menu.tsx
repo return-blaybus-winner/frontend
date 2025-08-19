@@ -1,13 +1,13 @@
 "use client";
 
+import SignInPopover from "@/app/_components/gnb/sign-in-popover";
 import ChatIcon from "@/app/_icons/chat-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import If from "@/components/utils/if";
-import Link from "next/link";
 
 export default function UserMenu() {
-  const isLoggedIn = true; // Replace with actual authentication logic
+  const isLoggedIn = false; // Replace with actual authentication logic
   const isCompany = true; // Replace with actual company logic
 
   return (
@@ -29,11 +29,7 @@ export default function UserMenu() {
         </div>
       </If>
       <If condition={!isLoggedIn}>
-        <Link className="flex items-center space-x-1" href="/login">
-          <span>회원가입</span>
-          <span>/</span>
-          <span>로그인</span>
-        </Link>
+        <SignInPopover />
       </If>
     </>
   );

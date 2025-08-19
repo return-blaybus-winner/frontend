@@ -42,6 +42,7 @@
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
   --width-1100: 68.75rem;
+  --color-kakao: #fee500;
   --color-gray-950: #0a0a0a;
   --color-gray-900: #262626;
   --color-gray-800: #404040;
@@ -55,6 +56,7 @@
   --color-gray-50: #ffffff;
   --color-orange-bold: #ff4726;
   --color-orange-light: #fff3f1;
+  --shadow-popover: 10px 10px 30px 0px rgba(0, 0, 0, 0.06);
 }
 
 :root {
