@@ -1,5 +1,5 @@
-import { CategoryHoverCard } from "@/app/_components/gnb/category-hover-card";
-import UserMenu from "@/app/_components/gnb/user-menu";
+import { CategoryHoverCard } from "@/app/(with-gnb)/_components/gnb/category-hover-card";
+import UserMenu from "@/app/(with-gnb)/_components/gnb/user-menu";
 import Logo from "@/app/_components/logo";
 import Link from "next/link";
 

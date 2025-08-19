@@ -1,6 +1,6 @@
 "use client";
 
-import SignInPopover from "@/app/_components/gnb/sign-in-popover";
+import SignInPopover from "@/app/(with-gnb)/_components/gnb/sign-in-popover";
 import ChatIcon from "@/app/_icons/chat-icon";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
