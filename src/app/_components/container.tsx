@@ -7,8 +7,10 @@ interface Props {
 }
 export default function Container({ children, className }: Props) {
   return (
-    <div className={cn("px-4", className)}>
-      <div className="w-1100 mx-auto flex flex-col">{children}</div>
+    <div className="px-4">
+      <div className={cn("w-1100 mx-auto flex flex-col", className)}>
+        {children}
+      </div>
     </div>
   );
 }
