@@ -5,8 +5,8 @@ import Link from "next/link";
 
 export default function GNB() {
   return (
-    <header className="z-50 w-full border-b border-gray-300 text-gray-900 h-[81px] flex items-center px-4 text-lg font-semibold fixed bg-white select-none">
-      <div className="w-1100 mx-auto flex items-center h-full">
+    <header className="z-50 w-full border-b border-gray-300 text-gray-900 h-[81px] flex items-center text-lg font-semibold fixed bg-white select-none">
+      <div className="w-1100 px-5 mx-auto flex items-center h-full">
         <Link href="/">
           <Logo />
         </Link>
