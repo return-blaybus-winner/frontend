@@ -28,7 +28,7 @@ import { useState } from "react";
 import SwitchCase from "@/components/utils/switch-case";
 import If from "@/components/utils/if";
 import { useRouter } from "next/navigation";
-import { UserRole } from "@/app/_model/user";
+import { UserRole } from "@/app/_models/user";
 
 enum SignUpPhase {
   Basic = "basic",

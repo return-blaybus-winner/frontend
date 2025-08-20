@@ -10,9 +10,7 @@ export default function WithGNBLayout({ children }: Props) {
   return (
     <Fragment>
       <GNB />
-      <div className="px-4">
-        <main className="w-1100 mx-auto pt-20">{children}</main>
-      </div>
+      <main className="pt-[81px]">{children}</main>
       <Footer />
     </Fragment>
   );

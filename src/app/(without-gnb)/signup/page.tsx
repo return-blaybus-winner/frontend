@@ -5,7 +5,7 @@ import Container from "@/app/_components/container";
 import { UserTypeSelection } from "@/app/(without-gnb)/signup/_components/user-type-selection";
 import { CompanySignUpForm } from "@/app/(without-gnb)/signup/_components/company-signup-form";
 import { ArtistSignUpForm } from "@/app/(without-gnb)/signup/_components/artist-signup-form";
-import { UserRole } from "@/app/_model/user";
+import { UserRole } from "@/app/_models/user";
 import SwitchCase from "@/components/utils/switch-case";
 
 export default function SignupPage() {

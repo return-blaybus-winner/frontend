@@ -1,8 +1,8 @@
 import Logo from "@/app/_components/logo";
-import Facebook from "@/app/_svg/facebook";
-import Google from "@/app/_svg/google";
-import Instagram from "@/app/_svg/instagram";
-import Youtube from "@/app/_svg/youtube";
+import Facebook from "@/app/_svgs/facebook";
+import Google from "@/app/_svgs/google";
+import Instagram from "@/app/_svgs/instagram";
+import Youtube from "@/app/_svgs/youtube";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 

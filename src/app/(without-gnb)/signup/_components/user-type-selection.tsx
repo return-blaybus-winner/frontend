@@ -1,6 +1,6 @@
-import { UserRole } from "@/app/_model/user";
-import ArtistSVG from "@/app/_svg/artist";
-import CompanySVG from "@/app/_svg/company";
+import { UserRole } from "@/app/_models/user";
+import ArtistSVG from "@/app/_svgs/artist";
+import CompanySVG from "@/app/_svgs/company";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import { useState } from "react";

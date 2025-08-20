@@ -15,7 +15,7 @@ import {
 import { companySchema, type CompanyFormValues } from "../_schemas";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
-import { UserRole } from "@/app/_model/user";
+import { UserRole } from "@/app/_models/user";
 
 export function CompanySignUpForm() {
   const router = useRouter();

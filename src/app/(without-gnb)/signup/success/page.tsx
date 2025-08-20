@@ -1,7 +1,7 @@
 "use client";
 
 import Container from "@/app/_components/container";
-import { UserRole } from "@/app/_model/user";
+import { UserRole } from "@/app/_models/user";
 import { Button } from "@/components/ui/button";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { Suspense } from "react";
