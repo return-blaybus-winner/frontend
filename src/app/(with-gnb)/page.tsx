@@ -152,7 +152,7 @@ export default async function Home() {
       </section>
 
       {/* Company Profiles */}
-      <section className="py-[120px] w-full">
+      <section className="pt-[120px] w-full">
         <div className="mb-8 flex items-end justify-between">
           <h2 className="text-[28px] font-semibold">
             최근 매칭 성공한 프로젝트
