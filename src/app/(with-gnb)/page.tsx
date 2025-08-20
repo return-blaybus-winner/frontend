@@ -159,12 +159,12 @@ export default async function Home() {
           </h2>
           <Button
             variant="outline"
-            className="w-[102px] rounded-[100px] font-semibold text-base py-[10px]"
+            className="w-[111px] rounded-[100px] font-semibold text-base py-[10px]"
           >
             기업 더보기
           </Button>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div className="grid grid-cols-2 gap-5">
           {Array.from({ length: 6 }).map((_, index) => (
             <CompanyCard key={index} />
           ))}
