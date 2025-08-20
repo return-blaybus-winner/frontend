@@ -1,11 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardTitle } from "@/components/ui/card";
-import { Heart, Star } from "lucide-react";
 import ProjectCard from "@/app/(with-gnb)/_components/project-card";
 import Container from "@/app/_components/container";
 import SearchIcon from "@/app/_icons/search-icon";
-import { BASE_URL } from "@/app/_constants/api";
 import Image from "next/image";
 import Link from "next/link";
 import MatchedProjectCard from "@/app/(with-gnb)/_components/matched-project-card";
@@ -13,9 +10,6 @@ import { Separator } from "@/components/ui/separator";
 import CompanyCard from "@/app/(with-gnb)/_components/company-card";
 
 export default async function Home() {
-  // const categories = await fetch(`${BASE_URL}/v0/categories/project/tree`);
-  // console.log("🚀 ~ Home ~ categories:", categories);
-
   return (
     <Container className="py-[90px] items-center">
       <h1 className="text-[40px] font-bold text-gray-950 mb-[10px]">
