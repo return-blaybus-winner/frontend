@@ -11,25 +11,47 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+
+interface DatePickerProps {
+  value?: Date;
+  onChange?: (date: Date | undefined) => void;
+  placeholder?: string;
+  className?: string;
+}
+
+export function DatePicker({
+  value,
+  onChange,
+  placeholder = "Pick a date",
+  className,
+}: DatePickerProps) {
+  return (
+    <Popover>
+      <PopoverTrigger className="h-12 flex items-center border border-gray-300 rounded-[6px] px-5 gap-2">
+        <CalendarIcon className="text-gray-500" />
+        {value ? (
+          format(value, "PPP")
+        ) : (
+          <span className="text-gray-500">{placeholder}</span>
+        )}
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0">
+        <Calendar mode="single" selected={value} onSelect={onChange} />
+      </PopoverContent>
+    </Popover>
+  );
+}
 
 export function DatePickerDemo() {
   const [date, setDate] = React.useState<Date>();
 
   return (
-    <Popover>
-      <PopoverTrigger asChild>
-        <Button
-          variant="outline"
-          data-empty={!date}
-          className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
-        >
-          <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
-        </Button>
-      </PopoverTrigger>
-      <PopoverContent className="w-auto p-0">
-        <Calendar mode="single" selected={date} onSelect={setDate} />
-      </PopoverContent>
-    </Popover>
+    <DatePicker
+      value={date}
+      onChange={setDate}
+      placeholder="Pick a date"
+      className="w-[280px]"
+    />
   );
 }

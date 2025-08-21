@@ -60,6 +60,7 @@
   --shadow-input: 0px 4px 8px 0px rgba(0, 0, 0, 0.05);
   --shadow-input-2: 10px 10px 30px 0px #0000000f;
   --shadow-card: 10px 10px 30px 0px rgba(0, 0, 0, 0.06);
+  --radius-200: 8px;
 }
 
 :root {

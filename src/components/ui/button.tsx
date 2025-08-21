@@ -11,7 +11,8 @@ const buttonVariants = cva(
       variant: {
         brand:
           "bg-primary text-white hover:bg-primary/90 disabled:bg-gray-200 disabled:text-gray-500",
-        outline: "border bg-white hover:bg-gray-100 border-gray-300",
+        outline:
+          "border text-gray-900 bg-white hover:bg-gray-100 border-gray-300",
         destructive:
           "bg-destructive text-white hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         secondary:
@@ -22,7 +23,7 @@ const buttonVariants = cva(
       },
       size: {
         default: "px-6 py-[6px]",
-        sm: "h-8 rounded-md gap-1.5 px-3",
+        md: "h-12 rounded-[10px] px-6 text-base",
         lg: "h-[52px] rounded-[10px] px-6",
         icon: "size-9",
       },

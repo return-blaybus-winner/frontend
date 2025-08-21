@@ -26,7 +26,7 @@ export const projectSchema = z.object({
   activeArea: z.string().min(1, { message: "활동 지역을 선택해주세요." }),
   budget: z.string().min(1, { message: "예상 예산을 입력해주세요." }),
 
-  portfolios: z.array(z.string()).optional(),
+  images: z.array(z.string()).optional(),
   url: z.string().optional(),
 
   recruitment: z.number().min(1, { message: "모집 인원을 입력해주세요." }),
