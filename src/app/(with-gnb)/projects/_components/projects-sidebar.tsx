@@ -8,7 +8,7 @@ import {
   BUDGET_OPTIONS,
   LOCATION_OPTIONS,
   DURATION_OPTIONS,
-  FILTER_SECTIONS
+  FILTER_SECTIONS,
 } from "../_constants/projects";
 
 interface ProjectsSidebarProps {
@@ -26,10 +26,11 @@ export default function ProjectsSidebar({
   selectedFilters,
   onSearchChange,
   onToggleFilter,
-  onFilterChange
+  onFilterChange,
 }: ProjectsSidebarProps) {
   return (
-    <div className="w-80 bg-white rounded-lg p-6 h-fit">
+    <div className="w-[300px] bg-white rounded-lg h-fit">
+      <h1 className="text-[24px] font-semibold mb-12">프로젝트 찾기</h1>
       {/* Search */}
       <div className="mb-6">
         <h3 className="font-semibold mb-3">필터</h3>
@@ -46,15 +47,16 @@ export default function ProjectsSidebar({
 
       {/* 분야 */}
       <div className="mb-6">
-        <button 
-          onClick={() => onToggleFilter('분야')}
+        <button
+          onClick={() => onToggleFilter("분야")}
           className="flex items-center justify-between w-full py-2 font-medium"
         >
           {FILTER_SECTIONS.분야}
-          {expandedFilters.분야 ? 
-            <span className="w-4 h-4">▲</span> : 
+          {expandedFilters.분야 ? (
+            <span className="w-4 h-4">▲</span>
+          ) : (
             <span className="w-4 h-4">▼</span>
-          }
+          )}
         </button>
         {expandedFilters.분야 && (
           <div className="mt-3">
@@ -72,7 +74,7 @@ export default function ProjectsSidebar({
       <FilterSection
         title={FILTER_SECTIONS.유형}
         isExpanded={expandedFilters.유형}
-        onToggle={() => onToggleFilter('유형')}
+        onToggle={() => onToggleFilter("유형")}
       >
         {TYPE_OPTIONS.map((type) => (
           <FilterOption key={type} label={type} />
@@ -83,7 +85,7 @@ export default function ProjectsSidebar({
       <FilterSection
         title={FILTER_SECTIONS.모집인원}
         isExpanded={expandedFilters.모집인원}
-        onToggle={() => onToggleFilter('모집인원')}
+        onToggle={() => onToggleFilter("모집인원")}
       >
         {RECRUIT_COUNT_OPTIONS.map((count) => (
           <FilterOption key={count} label={count} />
@@ -94,7 +96,7 @@ export default function ProjectsSidebar({
       <FilterSection
         title={FILTER_SECTIONS.예산}
         isExpanded={expandedFilters.예산}
-        onToggle={() => onToggleFilter('예산')}
+        onToggle={() => onToggleFilter("예산")}
       >
         {BUDGET_OPTIONS.map((budget) => (
           <FilterOption key={budget} label={budget} />
@@ -105,7 +107,7 @@ export default function ProjectsSidebar({
       <FilterSection
         title={FILTER_SECTIONS.지역}
         isExpanded={expandedFilters.지역}
-        onToggle={() => onToggleFilter('지역')}
+        onToggle={() => onToggleFilter("지역")}
       >
         {LOCATION_OPTIONS.map((location) => (
           <FilterOption key={location} label={location} />
@@ -116,7 +118,7 @@ export default function ProjectsSidebar({
       <FilterSection
         title={FILTER_SECTIONS.기간}
         isExpanded={expandedFilters.기간}
-        onToggle={() => onToggleFilter('기간')}
+        onToggle={() => onToggleFilter("기간")}
       >
         {DURATION_OPTIONS.map((duration) => (
           <FilterOption key={duration} label={duration} />
