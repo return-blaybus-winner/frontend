@@ -1,0 +1,108 @@
+export interface Project {
+  id: number;
+  title: string;
+  description: string;
+  company: string;
+  category: string;
+  budget: string;
+  duration: string;
+  location: string;
+  tags: string[];
+  deadline: string;
+  image: string;
+  isLiked: boolean;
+  companyType: 'studio' | 'company';
+}
+
+export const mockProjects: Project[] = [
+  {
+    id: 1,
+    title: "브랜드 협업 작가 모집",
+    description: "진품과 컬렉션 아이템의 동시 어토 디자인 — 도메 어토 프로젝트",
+    company: "GreenWave Studio",
+    category: "시각디자인",
+    budget: "모집 마감 D-10",
+    duration: "2일 전",
+    location: "서울",
+    tags: ["브랜딩", "그래픽"],
+    deadline: "2024-09-01",
+    image: "/api/placeholder/400/200",
+    isLiked: false,
+    companyType: "studio"
+  },
+  {
+    id: 2,
+    title: "공예 협업 참여자 모집",
+    description: "일상을 돌봐주는 재주는 실새 — 브랜드 아트 플러그먼트디자인",
+    company: "Echo Electronics",
+    category: "시각디자인",
+    budget: "모집 마감 D-11",
+    duration: "2일 전", 
+    location: "서울",
+    tags: ["공예", "협업"],
+    deadline: "2024-09-15",
+    image: "/api/placeholder/400/200",
+    isLiked: false,
+    companyType: "company"
+  },
+  {
+    id: 3,
+    title: "아트 브랜드 협업 작가 모집",
+    description: "짚은 순간이 완성되는 많이까지 — 공예 협업 프로젝트",
+    company: "기업 회사 A",
+    category: "시각디자인", 
+    budget: "모집 마감 D-9",
+    duration: "2일 전",
+    location: "경기",
+    tags: ["아트", "브랜드"],
+    deadline: "2024-08-30",
+    image: "/api/placeholder/400/200",
+    isLiked: false,
+    companyType: "company"
+  },
+  {
+    id: 4,
+    title: "도예/공예 협업 작가 모집",
+    description: "시각적 영향 쥐, 실험 탈은 그냥 — 도메 협업 프로젝트",
+    company: "기업 회사 A",
+    category: "시각디자인",
+    budget: "모집 마감 D-18",
+    duration: "2일 전",
+    location: "경기",
+    tags: ["도예", "공예"],
+    deadline: "2024-10-01",
+    image: "/api/placeholder/400/200", 
+    isLiked: false,
+    companyType: "company"
+  },
+  {
+    id: 5,
+    title: "도예/공예 작가님들 구합니다.",
+    description: "출하적 바이니스는 성갈 에쟁 — 도메 & 공예 협업 프로젝트",
+    company: "Studio JKD",
+    category: "시각디자인",
+    budget: "모집 마감 D-13",
+    duration: "2일 전",
+    location: "경우주",
+    tags: ["도예", "공예"],
+    deadline: "2024-09-20",
+    image: "/api/placeholder/400/200",
+    isLiked: false,
+    companyType: "studio"
+  },
+  {
+    id: 6,
+    title: "헨드크래프트 작가 모집",
+    description: "순간에서 만들어내는 일상의 가치 — 공예의 브랜드크래프트 아듬",
+    company: "기업 회사 A", 
+    category: "시각디자인",
+    budget: "모집 마감 D-12",
+    duration: "2일 전",
+    location: "경우주",
+    tags: ["핸드크래프트"],
+    deadline: "2024-09-25",
+    image: "/api/placeholder/400/200",
+    isLiked: false,
+    companyType: "company"
+  }
+];
