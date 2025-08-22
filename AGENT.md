@@ -28,11 +28,14 @@
 - **Tailwind CSS**: 스타일링 및 애니메이션(`tw-animate-css`).
 - **Next.js Font API**: Geist 폰트 적용.
 
-## 코드 작성 예시
+## 코드 작성 규칙
 
 - Shadcn UI 컴포넌트 추가 시 `src/components/ui/`에 파일 생성, `cn` 함수로 클래스 병합.
 - 페이지 추가 시 `src/app/`에 파일 생성, Next.js의 파일 기반 라우팅 활용.
 - 스타일은 Tailwind CSS 유틸리티 우선, 필요시 PostCSS 플러그인 추가.
+- 모든 import는 절대 경로로 작성한다.
+- 중복을 피한다.
+- 변경이 최대한 쉽도록 작성한다.
 
 ## 참고 파일
 

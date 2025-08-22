@@ -5,12 +5,12 @@ export const MOCK_PROJECT_DATA = {
   id: "1",
   imageUrl: "/images/project1.jpg",
   numberOfPeople: 10,
-  title: "Fusion Art Installation 2025"
+  title: "Fusion Art Installation 2025",
 };
 
 export const CATEGORY_ITEMS = Array.from({ length: 7 }, (_, index) => ({
   id: index,
   imageUrl: `/images/home/${index}.png`,
   label: "전시 기획/참여",
-  href: "/"
+  href: "/projects",
 }));
