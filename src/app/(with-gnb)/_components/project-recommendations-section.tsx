@@ -4,7 +4,8 @@ import { SECTIONS } from "../_constants/home";
 import { MOCK_PROJECT_DATA } from "../_constants/mock-data";
 
 export default function ProjectRecommendationsSection() {
-  const { title, description, buttonText, buttonWidth } = SECTIONS.PROJECT_RECOMMENDATIONS;
+  const { title, description, buttonText, buttonWidth } =
+    SECTIONS.PROJECT_RECOMMENDATIONS;
 
   return (
     <section className="pt-[137px]">
