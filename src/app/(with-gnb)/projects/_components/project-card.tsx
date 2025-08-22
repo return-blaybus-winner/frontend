@@ -3,17 +3,17 @@ import { Project } from "../_constants/mock-data";
 
 interface ProjectCardProps {
   project: Project;
-  isLiked: boolean;
-  onToggleLike: (projectId: number) => void;
+  isLiked?: boolean;
+  onToggleLike?: () => void;
 }
 
-export default function ProjectCard({ project, isLiked, onToggleLike }: ProjectCardProps) {
+export default function ProjectCard({ project, isLiked = false, onToggleLike }: ProjectCardProps) {
   return (
     <div className="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow">
       <div className="relative">
         <div className="h-48 bg-gradient-to-br from-blue-400 via-purple-500 to-yellow-400"></div>
         <button 
-          onClick={() => onToggleLike(project.id)}
+          onClick={() => onToggleLike?.()}
           className="absolute top-4 right-4 p-2 bg-white/80 rounded-full hover:bg-white transition-colors"
         >
           <Heart 

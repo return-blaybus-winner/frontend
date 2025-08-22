@@ -23,6 +23,7 @@ export default function ProjectRecommendationsSection() {
               ...MOCK_PROJECT_DATA,
               liked: index % 2 === 0,
             }}
+            className="shadow-card"
           />
         ))}
       </div>

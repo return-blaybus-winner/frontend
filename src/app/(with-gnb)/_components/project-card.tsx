@@ -16,12 +16,13 @@ import Link from "next/link";
 
 interface Props {
   project: Project;
+  className?: string;
 }
 
-export default function ProjectCard({ project }: Props) {
+export default function ProjectCard({ project, className }: Props) {
   return (
     <Link href={`/projects/1`}>
-      <Card className="pt-0 shadow-card border-[#f1f1f5] cursor-pointer">
+      <Card className={cn("pt-0  border-[#f1f1f5] cursor-pointer", className)}>
         <div className="relative p-2 pb-0">
           <div className="w-full h-48 bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 rounded-[10px] overflow-hidden"></div>
           <Button
