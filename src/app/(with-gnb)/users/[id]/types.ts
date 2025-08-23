@@ -27,18 +27,6 @@ export interface UserProfile {
   stats: UserStats;
 }
 
-export interface ProfileTabProps {
-  activeTab: string;
-  onTabChange: (tab: string) => void;
-}
-
-export interface UserSidebarProps {
-  user: UserProfile;
-  isMe: boolean;
-  isEditMode?: boolean;
-  onEditToggle?: () => void;
-}
-
 export interface UserProfileContentProps {
   user: UserProfile;
   isMe: boolean;

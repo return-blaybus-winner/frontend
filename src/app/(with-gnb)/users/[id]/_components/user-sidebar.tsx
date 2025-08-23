@@ -1,19 +1,17 @@
+import { UserProfile } from "@/app/(with-gnb)/users/[id]/types";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { UserSidebarProps } from "../types";
 import { Separator } from "@/components/ui/separator";
 
-export default function UserSidebar({
-  user,
-  isMe,
-  isEditMode = false,
-  onEditToggle,
-}: UserSidebarProps) {
+interface UserSidebarProps {
+  user: UserProfile;
+}
+
+export default function UserSidebar({ user }: UserSidebarProps) {
   return (
     <div className="w-[300px]">
       <aside className="sticky top-28 bg-white">
-        <Card className="p-6 border border-gray-300 rounded-[12px] w-full gap-6 ">
+        <Card className="p-6 pb-8 border border-gray-300 rounded-[12px] w-full gap-6 ">
           <div className="flex items-center gap-4">
             <Avatar className="size-[60px]  bg-gradient-to-r from-pink-500 to-orange-500">
               <AvatarImage src={user.avatar} alt={user.name} />
@@ -45,16 +43,6 @@ export default function UserSidebar({
               <span className="font-semibold">{user.stats.collaborations}</span>
             </div>
           </div>
-
-          {isMe && !isEditMode && (
-            <Button
-              variant="outline"
-              className="w-full h-[52px] rounded-[10px] text-base font-semibold mb-2"
-              onClick={onEditToggle}
-            >
-              프로필 수정하기
-            </Button>
-          )}
         </Card>
       </aside>
     </div>

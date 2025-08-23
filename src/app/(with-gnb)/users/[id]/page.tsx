@@ -8,14 +8,16 @@ import ProfileContent from "./_components/profile-content";
 import { MOCK_USER } from "./constants";
 import type { UserProfile } from "./types";
 import SwitchCase from "@/components/utils/switch-case";
-import ProjectList from "@/app/(with-gnb)/users/[id]/_components/project-list";
+import ProjectContent from "@/app/(with-gnb)/users/[id]/_components/project-content";
 
 export default function UserPage() {
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedUser, setEditedUser] = useState<UserProfile>(MOCK_USER);
-  const isMe = true;
   const user: UserProfile = MOCK_USER;
+
+  const isMe = true;
+  const isArtist = true;
 
   const handleEditToggle = () => {
     if (isEditMode) {
@@ -38,15 +40,15 @@ export default function UserPage() {
   return (
     <Container className="mt-8">
       <div className="flex flex-col lg:flex-row gap-[80px]">
-        <UserSidebar
-          user={user}
-          isMe={isMe}
-          isEditMode={isEditMode}
-          onEditToggle={handleEditToggle}
-        />
+        <UserSidebar user={user} />
 
         <div className="flex-1">
-          <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          <ProfileTabs
+            isMe={isMe}
+            isArtist={isArtist}
+            activeTab={activeTab}
+            onTabChange={setActiveTab}
+          />
           <SwitchCase
             value={activeTab}
             caseBy={{
@@ -60,7 +62,7 @@ export default function UserPage() {
                   onCancel={handleCancel}
                 />
               ),
-              projects: <ProjectList />,
+              projects: <ProjectContent />,
               proposals: (
                 <div className="text-center py-12">
                   <p className="text-gray-500">

@@ -63,21 +63,26 @@ export default function ProfileContent({
       </div>
 
       {/* 저장/취소 버튼 */}
-      {isEditMode && isMe && (
-        <div className="flex items-center justify-center gap-4 pt-4">
-          <Button
-            variant="outline"
-            size={"md"}
-            onClick={onCancel}
-            className="text-gray-600"
-          >
-            취소
+      {isMe &&
+        (isEditMode ? (
+          <div className="flex items-center justify-center gap-4 pt-4">
+            <Button
+              variant="outline"
+              size={"md"}
+              onClick={onCancel}
+              className="text-gray-600"
+            >
+              취소
+            </Button>
+            <Button variant="brand" size={"md"} onClick={onSave}>
+              저장하기
+            </Button>
+          </div>
+        ) : (
+          <Button variant={"outline"} size={"md"} className="mt-6">
+            프로필 변경하기
           </Button>
-          <Button variant="brand" size={"md"} onClick={onSave}>
-            저장하기
-          </Button>
-        </div>
-      )}
+        ))}
 
       {!isEditMode && (
         <>

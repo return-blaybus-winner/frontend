@@ -4,7 +4,7 @@ import { useMemo, useEffect, useState } from "react";
 import ProjectsSidebar from "./_components/projects-sidebar";
 import ProjectTabs from "./_components/project-tabs";
 import FiltersBar from "./_components/filters-bar";
-import ProjectList from "./_components/project-list";
+import ProjectList from "../_components/project-list";
 import Pagination from "./_components/pagination";
 import { mockProjects } from "./_constants/mock-data";
 import { useProjectSearch } from "./_hooks/use-project-search";
@@ -91,8 +91,6 @@ export default function ProjectsPage() {
           <div className="mt-4">
             <ProjectList
               projects={currentProjects as Project[]}
-              likedProjects={uiHook.likedProjects}
-              onToggleLike={uiHook.toggleLike}
               isLoading={isLoading}
             />
 

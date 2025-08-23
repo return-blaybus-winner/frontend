@@ -1,15 +1,9 @@
-import CategoryButton from "@/app/(with-gnb)/_components/category-button";
+import ProjectList from "@/app/(with-gnb)/_components/project-list";
+import { mockProjects } from "@/app/(with-gnb)/projects/_constants/mock-data";
 import CategoryButtons from "@/app/(with-gnb)/users/[id]/_components/category-buttons";
 import React, { useState } from "react";
 
-const CATEGORIES = [
-  { id: "all", label: "전체" },
-  { id: "pending", label: "매칭 대기중" },
-  { id: "completed", label: "매칭 완료" },
-  { id: "liked", label: "찜한 프로젝트" },
-];
-
-export default function ProjectList() {
+export default function ProjectContent() {
   const [activeCategory, setActiveCategory] = useState("all");
   return (
     <div>
@@ -17,6 +11,9 @@ export default function ProjectList() {
         activeCategory={activeCategory}
         onCategoryChange={setActiveCategory}
       />
+      <div className="mt-6">
+        <ProjectList projects={mockProjects} />
+      </div>
     </div>
   );
 }

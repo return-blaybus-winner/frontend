@@ -3,8 +3,6 @@ import { Project } from "@/app/_models/project";
 
 interface ProjectListProps {
   projects: Project[];
-  likedProjects: Set<number>;
-  onToggleLike: (projectId: number) => void;
   isLoading?: boolean;
 }
 

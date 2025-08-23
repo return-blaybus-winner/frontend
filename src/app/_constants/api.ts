@@ -1,1 +1,1 @@
-export const BASE_URL = "http://35.206.125.156/api";
+export const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;

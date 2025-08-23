@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
   rewrites: async () => [
     {
       source: "/api/:path*",
-      destination: "http://35.206.125.156/api/:path*",
+      destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/:path*`,
     },
   ],
   async headers() {
@@ -15,7 +15,8 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://t1.kakaocdn.net https://developers.kakao.com;",
+            value:
+              "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://t1.kakaocdn.net https://developers.kakao.com;",
           },
         ],
       },
