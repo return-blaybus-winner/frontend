@@ -69,7 +69,7 @@ export default function ProjectsPage() {
 
   return (
     <Container className="mt-10">
-      <div className="flex gap-8">
+      <div className="flex gap-20">
         <ProjectsSidebar
           expandedFilters={uiHook.expandedFilters}
           selectedFilters={searchHook.selectedFilters}
