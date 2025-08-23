@@ -8,25 +8,22 @@ interface FiltersBarProps {
   onSortChange: (sort: string) => void;
 }
 
-export default function FiltersBar({ 
-  activeCategory, 
-  sortBy, 
-  onCategoryChange, 
-  onSortChange 
+export default function FiltersBar({
+  activeCategory,
+  sortBy,
+  onCategoryChange,
+  onSortChange,
 }: FiltersBarProps) {
   return (
-    <div className="flex items-center justify-between mb-6">
-      <div className="flex items-center gap-4">
-        <CategoryButtons 
+    <div className="flex items-start justify-between mb-6">
+      <div className="flex items-center gap-4 mt-2">
+        <CategoryButtons
           activeCategory={activeCategory}
           onCategoryChange={onCategoryChange}
         />
       </div>
       <div>
-        <SortSelector 
-          sortBy={sortBy}
-          onSortChange={onSortChange}
-        />
+        <SortSelector sortBy={sortBy} onSortChange={onSortChange} />
       </div>
     </div>
   );

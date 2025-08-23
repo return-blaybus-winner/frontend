@@ -4,7 +4,6 @@ import { useMemo, useEffect } from "react";
 import ProjectsSidebar from "./_components/projects-sidebar";
 import ProjectTabs from "./_components/project-tabs";
 import FiltersBar from "./_components/filters-bar";
-import ResultsInfo from "./_components/results-info";
 import ProjectList from "./_components/project-list";
 import Pagination from "./_components/pagination";
 import { mockProjects } from "./_constants/mock-data";
@@ -19,16 +18,13 @@ import Container from "@/app/_components/container";
 import { Project } from "@/app/_models/project";
 
 export default function ProjectsPage() {
-  // Individual hooks for different concerns
   const searchHook = useProjectSearch();
   const uiHook = useProjectUI();
 
-  // Mock data (will be replaced with react-query later)
   const projects = mockProjects;
   const isLoading = false;
   const error = null;
 
-  // Computed data
   const searchParams = searchHook.getSearchParams();
 
   const filteredAndSortedProjects = useMemo(() => {
@@ -44,9 +40,6 @@ export default function ProjectsPage() {
     );
   }, [filteredAndSortedProjects, uiHook.currentPage]);
 
-  const filteredCount = filteredAndSortedProjects.length;
-
-  // Reset page when search params change
   const { resetPage } = uiHook;
   useEffect(() => {
     resetPage();
@@ -98,8 +91,6 @@ export default function ProjectsPage() {
           />
 
           <div className="mt-4">
-            <ResultsInfo filteredCount={filteredCount} />
-
             <ProjectList
               projects={currentProjects as Project[]}
               likedProjects={uiHook.likedProjects}

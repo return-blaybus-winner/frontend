@@ -33,7 +33,9 @@ export default function ProjectsSidebar({
 
   return (
     <div className="w-[300px] bg-white rounded-lg h-fit">
-      <h1 className="text-[24px] font-semibold mb-12">프로젝트 찾기</h1>
+      <h1 className="text-[24px] flex items-center h-20 font-semibold mb-12">
+        프로젝트 찾기
+      </h1>
       <div className="h-[44px] flex items-center font-semibold text-base">
         필터
       </div>

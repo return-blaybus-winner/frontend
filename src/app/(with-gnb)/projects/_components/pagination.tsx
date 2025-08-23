@@ -1,10 +1,16 @@
+import ChevronRightIcon from "@/app/_icons/chevron-right-icon";
+
 interface PaginationProps {
   currentPage: number;
   totalPages: number;
   onPageChange: (page: number) => void;
 }
 
-export default function Pagination({ currentPage, totalPages, onPageChange }: PaginationProps) {
+export default function Pagination({
+  currentPage,
+  totalPages,
+  onPageChange,
+}: PaginationProps) {
   if (totalPages <= 1) return null;
 
   return (
@@ -12,12 +18,12 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
       {currentPage > 1 && (
         <button
           onClick={() => onPageChange(currentPage - 1)}
-          className="text-gray-500 hover:text-gray-700 px-2"
+          className="text-gray-800 hover:text-gray-900 px-2"
         >
-          &lt;
+          <ChevronRightIcon className="rotate-180" />
         </button>
       )}
-      
+
       {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
         let pageNum;
         if (totalPages <= 5) {
@@ -29,28 +35,28 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         } else {
           pageNum = currentPage - 2 + i;
         }
-        
+
         return (
           <button
             key={pageNum}
             onClick={() => onPageChange(pageNum)}
-            className={`w-8 h-8 rounded ${
-              currentPage === pageNum 
-                ? 'bg-orange-500 text-white' 
-                : 'text-gray-500 hover:text-gray-700'
+            className={`w-8 h-8 text-sm font-medium rounded ${
+              currentPage === pageNum
+                ? "bg-primary text-white"
+                : "text-gray-700 hover:text-gray-900"
             }`}
           >
             {pageNum}
           </button>
         );
       })}
-      
+
       {currentPage < totalPages && (
         <button
           onClick={() => onPageChange(currentPage + 1)}
-          className="text-gray-500 hover:text-gray-700 px-2"
+          className="text-gray-800 hover:text-gray-900 px-2"
         >
-          &gt;
+          <ChevronRightIcon />
         </button>
       )}
     </div>
