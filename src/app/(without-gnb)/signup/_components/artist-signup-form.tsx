@@ -59,7 +59,7 @@ export function ArtistSignUpForm() {
     console.log("Artist sign up:", values);
     // 실제 회원가입 로직은 여기에 구현
 
-    router.replace("/signup/success/?from=" + UserRole.Artist);
+    router.replace("/signup/success/?from=" + UserRole.ARTIST);
   };
 
   return (

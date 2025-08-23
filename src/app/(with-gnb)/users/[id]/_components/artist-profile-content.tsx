@@ -1,24 +1,48 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
-import { UserProfileContentProps, UserProfile } from "../types";
 import ProfileField from "./profile-field";
 import SectionHeader from "./section-header";
 import { Separator } from "@/components/ui/separator";
+import { User, isArtist } from "@/app/_models/user";
 
 const PROFILE_FIELDS = [
-  { key: "nickname" as const, label: "닉네임", required: true },
+  { key: "artistName" as const, label: "아티스트명", required: true },
   { key: "introduction" as const, label: "소개글", required: true },
   {
-    key: "collaborationField" as const,
-    label: "관심 협업 분야",
+    key: "representativeField" as const,
+    label: "대표 분야",
     required: true,
   },
-  { key: "activityArea" as const, label: "활동 지역", required: true },
-  { key: "projectMethod" as const, label: "진행 방식", required: true },
-  { key: "workableTime" as const, label: "연락 가능 시간", required: true },
+  {
+    key: "mainActivityField" as const,
+    label: "주요 활동 분야",
+    required: true,
+  },
+  { key: "subActivityField" as const, label: "세부 활동 분야", required: true },
+  {
+    key: "detailActivityField" as const,
+    label: "상세 활동 분야",
+    required: true,
+  },
+  { key: "activityLocation" as const, label: "활동 지역", required: true },
+  { key: "workingMethod" as const, label: "진행 방식", required: true },
+  {
+    key: "availableContactTime" as const,
+    label: "연락 가능 시간",
+    required: true,
+  },
 ] as const;
 
-export default function ProfileContent({
+interface UserProfileContentProps {
+  user: User;
+  isMe: boolean;
+  isEditMode?: boolean;
+  onUserChange?: (user: User) => void;
+  onSave?: () => void;
+  onCancel?: () => void;
+}
+
+export default function ArtistProfileContent({
   user,
   isMe = false,
   isEditMode = false,
@@ -26,13 +50,18 @@ export default function ProfileContent({
   onSave,
   onCancel,
 }: UserProfileContentProps) {
-  const [contactValue, setContactValue] = useState("미입력");
+  const [contactValue, setContactValue] = useState(
+    isArtist(user) ? user.profile.contact : "미입력"
+  );
 
-  const handleFieldChange = (field: keyof UserProfile, value: string) => {
-    if (onUserChange) {
+  const handleFieldChange = (field: string, value: string) => {
+    if (onUserChange && isArtist(user)) {
       onUserChange({
         ...user,
-        [field]: value,
+        profile: {
+          ...user.profile,
+          [field]: value,
+        },
       });
     }
   };
@@ -45,7 +74,7 @@ export default function ProfileContent({
           <ProfileField
             key={field.key}
             label={field.label}
-            value={user[field.key]}
+            value={isArtist(user) ? user.profile[field.key] : ""}
             required={isEditMode && field.required}
             isEditMode={isEditMode}
             onChange={(value) => handleFieldChange(field.key, value)}
@@ -84,36 +113,26 @@ export default function ProfileContent({
           </Button>
         ))}
 
-      {!isEditMode && (
+      {!isEditMode && isArtist(user) && user.profile.portfolio && (
         <>
-          <Separator />
-
-          {/* 경력 섹션 */}
-          <div className="flex flex-col">
-            <SectionHeader title={user.career.title} />
-            <div className="space-y-2">
-              {user.career.items.map((item, index) => (
-                <div key={index} className="py-2">
-                  <span className="text-gray-700">{item}</span>
-                </div>
-              ))}
-            </div>
-            <Button variant={"outline"} size={"md"} className="mt-6">
-              경력 추가하기
-            </Button>
-          </div>
-
           <Separator />
 
           {/* 포트폴리오 섹션 */}
           <div className="flex flex-col">
-            <SectionHeader title={user.portfolio.title} />
+            <SectionHeader title="포트폴리오" />
             <div className="space-y-2">
-              {user.portfolio.items.map((item, index) => (
+              {user.profile.portfolio.representativeImages.map((image, index) => (
                 <div key={index} className="py-2">
-                  <span className="text-gray-700">{item}</span>
+                  <img src={image} alt={`포트폴리오 ${index + 1}`} className="w-full h-auto" />
                 </div>
               ))}
+              {user.profile.portfolio.portfolioUrl && (
+                <div className="py-2">
+                  <a href={user.profile.portfolio.portfolioUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
+                    포트폴리오 링크
+                  </a>
+                </div>
+              )}
             </div>
             <Button variant={"outline"} size={"md"} className="mt-6">
               포트폴리오 추가하기

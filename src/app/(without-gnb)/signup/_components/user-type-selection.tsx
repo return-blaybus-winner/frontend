@@ -20,10 +20,10 @@ export function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
     <div className="flex flex-col gap-5">
       <h1 className="font-semibold pt-10 text-gray-950 text-[28px] whitespace-pre-line">{`만나서 반갑습니다! \n어떤 유형으로 가입하시나요?`}</h1>
       <button
-        onClick={() => handleSelect(UserRole.Company)}
+        onClick={() => handleSelect(UserRole.CORPORATE)}
         className={cn(
           "flex flex-col items-center py-8 border font-semibold rounded-[10px] text-base transition-all text-left",
-          pendingType === UserRole.Company
+          pendingType === UserRole.CORPORATE
             ? "border-primary"
             : "border-gray-300 hover:border-primary/50"
         )}
@@ -33,10 +33,10 @@ export function UserTypeSelection({ onSelect }: UserTypeSelectionProps) {
       </button>
 
       <button
-        onClick={() => handleSelect(UserRole.Artist)}
+        onClick={() => handleSelect(UserRole.ARTIST)}
         className={cn(
           "flex flex-col items-center py-8 border font-semibold rounded-[10px] text-base transition-all text-left",
-          pendingType === UserRole.Artist
+          pendingType === UserRole.ARTIST
             ? "border-primary"
             : "border-gray-300 hover:border-primary/50"
         )}

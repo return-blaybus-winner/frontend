@@ -1,3 +1,5 @@
+import { User } from "@/app/_models/user";
+
 export interface UserStats {
   projects: number;
   techStack: number;
@@ -5,33 +7,11 @@ export interface UserStats {
   rating: number;
 }
 
-export interface UserProfile {
-  id: string;
-  name: string;
-  avatar: string;
-  nickname: string;
-  introduction: string;
-  collaborationField: string;
-  activityArea: string;
-  projectMethod: string;
-  workableTime: string;
-  portfolioSection: string;
-  career: {
-    title: string;
-    items: string[];
-  };
-  portfolio: {
-    title: string;
-    items: string[];
-  };
-  stats: UserStats;
-}
-
 export interface UserProfileContentProps {
-  user: UserProfile;
+  user: User;
   isMe: boolean;
   isEditMode?: boolean;
-  onUserChange?: (user: UserProfile) => void;
+  onUserChange?: (user: User) => void;
   onSave?: () => void;
   onCancel?: () => void;
 }

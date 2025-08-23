@@ -37,7 +37,7 @@ function Heading() {
     <div>
       <h1 className="font-semibold text-gray-950 text-[28px] whitespace-pre-line">{`가입 완료!`}</h1>
       <p className="mt-3 font-medium text-base text-gray-600">
-        {from === UserRole.Artist
+        {from === UserRole.ARTIST
           ? "무브텀과 함께 일상을 바꾸는 창작을 시작해보세요."
           : "무브텀에서 뛰어난 아티스트를 만나보세요."}
       </p>

@@ -32,7 +32,7 @@ export function CompanySignUpForm() {
   const onSubmit = (values: CompanyFormValues) => {
     console.log("Company sign up:", values);
     // 실제 회원가입 로직은 여기에 구현
-    router.replace("/signup/success/?from=" + UserRole.Company);
+    router.replace("/signup/success/?from=" + UserRole.CORPORATE);
   };
 
   return (

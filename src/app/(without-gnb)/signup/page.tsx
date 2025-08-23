@@ -23,8 +23,8 @@ export default function SignupPage() {
         <SwitchCase
           value={selectedUserType}
           caseBy={{
-            [UserRole.Company]: <CompanySignUpForm />,
-            [UserRole.Artist]: <ArtistSignUpForm />,
+            [UserRole.CORPORATE]: <CompanySignUpForm />,
+            [UserRole.ARTIST]: <ArtistSignUpForm />,
           }}
           defaultComponent={
             <UserTypeSelection onSelect={handleUserTypeSelect} />

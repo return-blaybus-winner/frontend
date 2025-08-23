@@ -69,10 +69,11 @@ class KakaoAuth {
         reject(new Error("Kakao SDK not loaded"));
         return;
       }
-
-      window.Kakao.Auth.authorize({
-        redirectUri: "http://localhost:3000/auth/kakao/callback",
-      });
+      if (process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI) {
+        window.Kakao.Auth.authorize({
+          redirectUri: process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI,
+        });
+      }
     });
   }
 

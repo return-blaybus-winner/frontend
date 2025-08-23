@@ -4,20 +4,21 @@ import { useState } from "react";
 import Container from "@/app/_components/container";
 import UserSidebar from "./_components/user-sidebar";
 import ProfileTabs from "./_components/profile-tabs";
-import ProfileContent from "./_components/profile-content";
-import { MOCK_USER } from "./constants";
-import type { UserProfile } from "./types";
+import ArtistProfileContent from "./_components/artist-profile-content";
+import { MOCK_ARTIST_USER, MOCK_CORPORATE_USER } from "./constants";
 import SwitchCase from "@/components/utils/switch-case";
 import ProjectContent from "@/app/(with-gnb)/users/[id]/_components/project-content";
+import { User } from "@/app/_models/user";
+import CompanyProfileContent from "@/app/(with-gnb)/users/[id]/_components/company-profile-content";
 
 export default function UserPage() {
   const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditMode, setIsEditMode] = useState(false);
-  const [editedUser, setEditedUser] = useState<UserProfile>(MOCK_USER);
-  const user: UserProfile = MOCK_USER;
+  const [editedUser, setEditedUser] = useState<User>(MOCK_ARTIST_USER);
 
   const isMe = true;
-  const isArtist = true;
+  const isArtist = false;
+  const user: User = isArtist ? MOCK_ARTIST_USER : MOCK_CORPORATE_USER;
 
   const handleEditToggle = () => {
     if (isEditMode) {
@@ -53,16 +54,29 @@ export default function UserPage() {
             value={activeTab}
             caseBy={{
               profile: (
-                <ProfileContent
-                  user={isEditMode ? editedUser : user}
-                  isMe={isMe}
-                  isEditMode={isEditMode}
-                  onUserChange={setEditedUser}
-                  onSave={handleSave}
-                  onCancel={handleCancel}
-                />
+                <>
+                  {isArtist ? (
+                    <ArtistProfileContent
+                      user={isEditMode ? editedUser : user}
+                      isMe={isMe}
+                      isEditMode={isEditMode}
+                      onUserChange={setEditedUser}
+                      onSave={handleSave}
+                      onCancel={handleCancel}
+                    />
+                  ) : (
+                    <CompanyProfileContent
+                      user={isEditMode ? editedUser : user}
+                      isMe={isMe}
+                      isEditMode={isEditMode}
+                      onUserChange={setEditedUser}
+                      onSave={handleSave}
+                      onCancel={handleCancel}
+                    />
+                  )}
+                </>
               ),
-              projects: <ProjectContent />,
+              projects: <ProjectContent isArtist={isArtist} />,
               proposals: (
                 <div className="text-center py-12">
                   <p className="text-gray-500">

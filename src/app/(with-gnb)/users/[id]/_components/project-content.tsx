@@ -3,7 +3,11 @@ import { mockProjects } from "@/app/(with-gnb)/projects/_constants/mock-data";
 import CategoryButtons from "@/app/(with-gnb)/users/[id]/_components/category-buttons";
 import React, { useState } from "react";
 
-export default function ProjectContent() {
+interface Props {
+  isArtist: boolean;
+}
+
+export default function ProjectContent({ isArtist }: Props) {
   const [activeCategory, setActiveCategory] = useState("all");
   return (
     <div>
@@ -14,6 +18,8 @@ export default function ProjectContent() {
       <div className="mt-6">
         <ProjectList projects={mockProjects} />
       </div>
+
+      {!isArtist}
     </div>
   );
 }
