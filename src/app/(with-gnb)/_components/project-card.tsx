@@ -15,7 +15,8 @@ import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 interface Props {
-  project: Project;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  project: Project | any; // Adjust type as needed
   className?: string;
 }
 
@@ -46,13 +47,10 @@ export default function ProjectCard({ project, className }: Props) {
               </Avatar>
               <span className="text-sm text-gray-600">DESIGN</span>
             </div>
-            <CardTitle>Fusion Art Installation 2025</CardTitle>
+            <CardTitle>{project.title}</CardTitle>
           </CardHeader>
           <CardContent className="mt-4">
-            <CardDescription>
-              *지역 커뮤니티와 연결되어 미술대학 학생들과 전문 예술가들이 협업할
-              수 있는 다양한 활동을 통해 새로운 예술 프로젝트를 진행합니다.
-            </CardDescription>
+            <CardDescription>{project.description}</CardDescription>
           </CardContent>
         </div>
         <CardFooter>

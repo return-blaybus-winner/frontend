@@ -10,39 +10,52 @@ import Pagination from "./_components/pagination";
 import { mockProjects } from "./_constants/mock-data";
 import { useProjectSearch } from "./_hooks/use-project-search";
 import { useProjectUI } from "./_hooks/use-project-ui";
-import { filterAndSortProjects, paginateProjects } from "./_hooks/project-filters.utils";
+import {
+  filterAndSortProjects,
+  paginateProjects,
+} from "./_hooks/project-filters.utils";
 import { ITEMS_PER_PAGE } from "./_constants/projects";
 import Container from "@/app/_components/container";
+import { Project } from "@/app/_models/project";
 
 export default function ProjectsPage() {
   // Individual hooks for different concerns
   const searchHook = useProjectSearch();
   const uiHook = useProjectUI();
-  
+
   // Mock data (will be replaced with react-query later)
   const projects = mockProjects;
   const isLoading = false;
   const error = null;
-  
+
   // Computed data
   const searchParams = searchHook.getSearchParams();
-  
+
   const filteredAndSortedProjects = useMemo(() => {
     if (!projects.length || isLoading || error) return [];
     return filterAndSortProjects(projects, searchParams);
   }, [projects, searchParams, isLoading, error]);
 
   const { paginatedItems: currentProjects, totalPages } = useMemo(() => {
-    return paginateProjects(filteredAndSortedProjects, uiHook.currentPage, ITEMS_PER_PAGE);
+    return paginateProjects(
+      filteredAndSortedProjects,
+      uiHook.currentPage,
+      ITEMS_PER_PAGE
+    );
   }, [filteredAndSortedProjects, uiHook.currentPage]);
-  
+
   const filteredCount = filteredAndSortedProjects.length;
-  
+
   // Reset page when search params change
   const { resetPage } = uiHook;
   useEffect(() => {
     resetPage();
-  }, [searchHook.searchTerm, searchHook.activeCategory, searchHook.selectedFilters, resetPage]);
+  }, [
+    searchHook.searchTerm,
+    searchHook.activeCategory,
+    searchHook.selectedFilters,
+    resetPage,
+  ]);
 
   if (error) {
     return (
@@ -65,18 +78,16 @@ export default function ProjectsPage() {
     <Container className="mt-10">
       <div className="flex gap-8">
         <ProjectsSidebar
-          searchTerm={searchHook.searchTerm}
           expandedFilters={uiHook.expandedFilters}
           selectedFilters={searchHook.selectedFilters}
-          onSearchChange={searchHook.setSearchTerm}
           onToggleFilter={uiHook.toggleFilter}
           onFilterChange={searchHook.handleFilterChange}
         />
 
         <div className="flex-1">
-          <ProjectTabs 
-            activeTab={uiHook.activeTab} 
-            onTabChange={uiHook.setActiveTab} 
+          <ProjectTabs
+            activeTab={uiHook.activeTab}
+            onTabChange={uiHook.setActiveTab}
           />
 
           <FiltersBar
@@ -90,7 +101,7 @@ export default function ProjectsPage() {
             <ResultsInfo filteredCount={filteredCount} />
 
             <ProjectList
-              projects={currentProjects}
+              projects={currentProjects as Project[]}
               likedProjects={uiHook.likedProjects}
               onToggleLike={uiHook.toggleLike}
               isLoading={isLoading}

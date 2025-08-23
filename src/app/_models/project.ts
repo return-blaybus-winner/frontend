@@ -6,5 +6,5 @@ export type Project = {
   imageUrl: string;
   numberOfPeople: number;
   area: string;
-  deadline: string;
+  projectEndDate: string;
 };

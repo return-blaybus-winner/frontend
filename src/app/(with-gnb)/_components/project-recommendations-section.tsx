@@ -8,7 +8,7 @@ export default function ProjectRecommendationsSection() {
     SECTIONS.PROJECT_RECOMMENDATIONS;
 
   return (
-    <section className="pt-[137px]">
+    <section className="pt-[137px] w-full">
       <SectionHeader
         title={title}
         description={description}

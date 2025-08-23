@@ -1,5 +1,10 @@
-import { ChevronDown, ChevronUp } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from "@/components/ui/accordion";
 import { FILTER_CATEGORIES } from "../_constants/projects";
 
 interface CategoryFilterProps {
@@ -13,56 +18,77 @@ export default function CategoryFilter({
   expandedFilters,
   selectedFilters,
   onToggleExpanded,
-  onFilterChange
+  onFilterChange,
 }: CategoryFilterProps) {
-  const handleSelectAll = () => {
-    const newFilters = Object.keys(selectedFilters).reduce((acc, key) => {
-      acc[key as keyof typeof selectedFilters] = false;
-      return acc;
-    }, {} as typeof selectedFilters);
-    Object.keys(newFilters).forEach(key => {
-      onFilterChange(key, false);
+  const handleCategorySelectAll = (
+    categoryKey: string,
+    subcategories: readonly string[]
+  ) => {
+    const allSubcategoriesSelected = subcategories.every(
+      (category) => selectedFilters[category as keyof typeof selectedFilters]
+    );
+
+    subcategories.forEach((category) => {
+      onFilterChange(category, !allSubcategoriesSelected);
     });
   };
 
+  const isCategoryAllSelected = (subcategories: readonly string[]) => {
+    return subcategories.every(
+      (category) => selectedFilters[category as keyof typeof selectedFilters]
+    );
+  };
+
+  const expandedCategoryValues = Object.keys(expandedFilters).filter(
+    (key) =>
+      expandedFilters[key] &&
+      FILTER_CATEGORIES[key as keyof typeof FILTER_CATEGORIES]
+  );
+
   return (
-    <div className="space-y-2">
-      <label className="flex items-center space-x-2 pl-4">
-        <Checkbox 
-          checked={Object.values(selectedFilters).every(v => !v)}
-          onCheckedChange={handleSelectAll}
-        />
-        <span className="text-sm">전체</span>
-      </label>
-      
+    <Accordion type="multiple" value={expandedCategoryValues}>
       {Object.entries(FILTER_CATEGORIES).map(([categoryKey, subcategories]) => (
-        <div key={categoryKey} className="pl-4">
-          <button 
+        <AccordionItem
+          key={categoryKey}
+          value={categoryKey}
+          className="border-0"
+        >
+          <AccordionTrigger
             onClick={() => onToggleExpanded(categoryKey)}
-            className={`flex items-center justify-between w-full py-2 font-medium ${
-              categoryKey === '시각디자인' ? 'text-orange-500' : ''
-            }`}
+            className={`py-2 px-4 hover:no-underline`}
           >
-            {categoryKey}
-            {expandedFilters[categoryKey] ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-          </button>
-          {expandedFilters[categoryKey] && (
-            <div className="mt-2 pl-4">
-              <div className="space-y-2">
-                {subcategories.map((category) => (
-                  <label key={category} className="flex items-center space-x-2">
-                    <Checkbox 
-                      checked={selectedFilters[category as keyof typeof selectedFilters]}
-                      onCheckedChange={(checked) => onFilterChange(category, !!checked)}
-                    />
-                    <span className="text-sm">{category}</span>
-                  </label>
-                ))}
-              </div>
+            <div className="flex items-center space-x-6 w-full">
+              <Checkbox
+                checked={isCategoryAllSelected(subcategories)}
+                onCheckedChange={() => {
+                  handleCategorySelectAll(categoryKey, subcategories);
+                }}
+                onClick={(e) => e.stopPropagation()}
+              />
+              <span className="text-gray-800">{categoryKey}</span>
             </div>
-          )}
-        </div>
+          </AccordionTrigger>
+          <AccordionContent className="mt-2 bg-gray-200 pb-0">
+            {subcategories.map((category) => (
+              <label
+                key={category}
+                className="flex items-center space-x-6 h-12 px-4"
+              >
+                <Checkbox
+                  checked={
+                    selectedFilters[category as keyof typeof selectedFilters]
+                  }
+                  onCheckedChange={(checked) =>
+                    onFilterChange(category, !!checked)
+                  }
+                  className="border-[#999999] data-[state=checked]:bg-[#999999] data-[state=checked]:text-white"
+                />
+                <span className="text-gray-700">{category}</span>
+              </label>
+            ))}
+          </AccordionContent>
+        </AccordionItem>
       ))}
-    </div>
+    </Accordion>
   );
 }

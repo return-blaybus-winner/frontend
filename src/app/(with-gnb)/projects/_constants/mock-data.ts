@@ -1,22 +1,8 @@
-export interface Project {
-  id: number;
-  title: string;
-  description: string;
-  company: string;
-  category: string;
-  budget: string;
-  duration: string;
-  location: string;
-  tags: string[];
-  deadline: string;
-  image: string;
-  isLiked: boolean;
-  companyType: 'studio' | 'company';
-}
+import { Project } from "@/app/_models/project";
 
 export const mockProjects: Project[] = [
   {
-    id: 1,
+    id: "1",
     title: "브랜드 협업 작가 모집",
     description: "진품과 컬렉션 아이템의 동시 어토 디자인 — 도메 어토 프로젝트",
     company: "GreenWave Studio",
@@ -28,7 +14,7 @@ export const mockProjects: Project[] = [
     deadline: "2024-09-01",
     image: "/api/placeholder/400/200",
     isLiked: false,
-    companyType: "studio"
+    companyType: "studio",
   },
   {
     id: 2,
@@ -37,20 +23,20 @@ export const mockProjects: Project[] = [
     company: "Echo Electronics",
     category: "시각디자인",
     budget: "모집 마감 D-11",
-    duration: "2일 전", 
+    duration: "2일 전",
     location: "서울",
     tags: ["공예", "협업"],
     deadline: "2024-09-15",
     image: "/api/placeholder/400/200",
     isLiked: false,
-    companyType: "company"
+    companyType: "company",
   },
   {
     id: 3,
     title: "아트 브랜드 협업 작가 모집",
     description: "짚은 순간이 완성되는 많이까지 — 공예 협업 프로젝트",
     company: "기업 회사 A",
-    category: "시각디자인", 
+    category: "시각디자인",
     budget: "모집 마감 D-9",
     duration: "2일 전",
     location: "경기",
@@ -58,7 +44,7 @@ export const mockProjects: Project[] = [
     deadline: "2024-08-30",
     image: "/api/placeholder/400/200",
     isLiked: false,
-    companyType: "company"
+    companyType: "company",
   },
   {
     id: 4,
@@ -71,9 +57,9 @@ export const mockProjects: Project[] = [
     location: "경기",
     tags: ["도예", "공예"],
     deadline: "2024-10-01",
-    image: "/api/placeholder/400/200", 
+    image: "/api/placeholder/400/200",
     isLiked: false,
-    companyType: "company"
+    companyType: "company",
   },
   {
     id: 5,
@@ -88,13 +74,13 @@ export const mockProjects: Project[] = [
     deadline: "2024-09-20",
     image: "/api/placeholder/400/200",
     isLiked: false,
-    companyType: "studio"
+    companyType: "studio",
   },
   {
     id: 6,
     title: "헨드크래프트 작가 모집",
     description: "순간에서 만들어내는 일상의 가치 — 공예의 브랜드크래프트 아듬",
-    company: "기업 회사 A", 
+    company: "기업 회사 A",
     category: "시각디자인",
     budget: "모집 마감 D-12",
     duration: "2일 전",
@@ -103,6 +89,6 @@ export const mockProjects: Project[] = [
     deadline: "2024-09-25",
     image: "/api/placeholder/400/200",
     isLiked: false,
-    companyType: "company"
-  }
+    companyType: "company",
+  },
 ];

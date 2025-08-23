@@ -1,5 +1,5 @@
-import { Project } from "../_constants/mock-data";
-import ProjectCard from "./project-card";
+import ProjectCard from "@/app/(with-gnb)/_components/project-card";
+import { Project } from "@/app/_models/project";
 
 interface ProjectListProps {
   projects: Project[];
@@ -8,11 +8,9 @@ interface ProjectListProps {
   isLoading?: boolean;
 }
 
-export default function ProjectList({ 
-  projects, 
-  likedProjects, 
-  onToggleLike, 
-  isLoading = false 
+export default function ProjectList({
+  projects,
+  isLoading = false,
 }: ProjectListProps) {
   if (isLoading) {
     return (
@@ -38,11 +36,10 @@ export default function ProjectList({
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
       {projects.map((project) => (
-        <ProjectCard 
-          key={project.id} 
+        <ProjectCard
+          key={project.id}
           project={project}
-          isLiked={likedProjects.has(project.id)}
-          onToggleLike={() => onToggleLike(project.id)}
+          className="border-gray-300"
         />
       ))}
     </div>
