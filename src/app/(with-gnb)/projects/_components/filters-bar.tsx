@@ -24,7 +24,7 @@ export default function FiltersBar() {
       params.set("category", updatedCategories.join(","));
     }
 
-    const url = `/projects?${params.toString()}`.replace(/%2C/g, ",");
+    const url = `?${params.toString()}`.replace(/%2C/g, ",");
     router.push(url);
   };
 

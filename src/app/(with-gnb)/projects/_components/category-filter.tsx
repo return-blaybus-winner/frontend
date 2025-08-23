@@ -49,7 +49,7 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
       newParams.delete("category");
     }
 
-    const url = `/projects?${newParams.toString()}`.replace(/%2C/g, ",");
+    const url = `?${newParams.toString()}`.replace(/%2C/g, ",");
     router.push(url, {
       scroll: false,
     });
@@ -70,7 +70,7 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
       params.set("category", updatedCategories.join(","));
     }
 
-    const url = `/projects?${params.toString()}`.replace(/%2C/g, ",");
+    const url = `?${params.toString()}`.replace(/%2C/g, ",");
     router.push(url);
   };
 

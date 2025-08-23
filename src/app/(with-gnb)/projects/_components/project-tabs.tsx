@@ -10,7 +10,7 @@ export default function ProjectTabs() {
   const handleTabChange = (tab: string) => {
     const params = new URLSearchParams(searchParams);
     params.set("projectStatus", tab);
-    router.push(`/projects?${params.toString()}`, {
+    router.push(`?${params.toString()}`, {
       scroll: false,
     });
   };

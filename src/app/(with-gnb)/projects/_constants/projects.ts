@@ -86,6 +86,12 @@ export const DURATION_OPTIONS = [
   { value: "9999999", label: "6개월 이상" },
 ] as const;
 
+export const CAREER_OPTIONS = [
+  { value: "junior", label: "주니어" },
+  { value: "mid", label: "미드" },
+  { value: "senior", label: "시니어" },
+] as const;
+
 export const FILTER_SECTIONS = {
   분야: "분야",
   유형: "유형",

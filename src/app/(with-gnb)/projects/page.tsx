@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, Suspense } from "react";
 import ProjectsSidebar from "./_components/projects-sidebar";
 import ProjectTabs from "./_components/project-tabs";
 import FiltersBar from "./_components/filters-bar";
@@ -69,29 +69,31 @@ export default function ProjectsPage() {
 
   return (
     <Container className="mt-10">
-      <div className="flex gap-20">
-        <ProjectsSidebar />
+      <Suspense>
+        <div className="flex gap-20">
+          <ProjectsSidebar />
 
-        <div className="flex-1">
-          <ProjectTabs />
-          <FiltersBar />
+          <div className="flex-1">
+            <ProjectTabs />
+            <FiltersBar />
 
-          <div className="mt-4">
-            <ProjectList
-              projects={currentProjects as Project[]}
-              isLoading={isLoading}
-            />
-
-            {!isLoading && totalPages > 1 && (
-              <Pagination
-                currentPage={uiHook.currentPage}
-                totalPages={totalPages}
-                onPageChange={uiHook.setCurrentPage}
+            <div className="mt-4">
+              <ProjectList
+                projects={currentProjects as Project[]}
+                isLoading={isLoading}
               />
-            )}
+
+              {!isLoading && totalPages > 1 && (
+                <Pagination
+                  currentPage={uiHook.currentPage}
+                  totalPages={totalPages}
+                  onPageChange={uiHook.setCurrentPage}
+                />
+              )}
+            </div>
           </div>
         </div>
-      </div>
+      </Suspense>
     </Container>
   );
 }
