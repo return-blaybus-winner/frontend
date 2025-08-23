@@ -1,28 +1,42 @@
-import { Project } from "../_constants/mock-data";
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { Project } from "@/app/_models/project";
 import { ProjectSearchFilters } from "./use-project-search";
 
 export function filterAndSortProjects(
-  projects: Project[],
+  projects: Project[] | any[],
   filters: ProjectSearchFilters
 ): Project[] {
   const { searchTerm, activeCategory, selectedFilters, sortBy } = filters;
 
-  const filtered = projects.filter((project) => {
-    const matchesSearch = project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+  const filtered = projects.filter((project: any) => {
+    const matchesSearch =
+      project.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
       project.description.toLowerCase().includes(searchTerm.toLowerCase());
-    
-    const matchesCategory = activeCategory === "전체" || 
+
+    const matchesCategory =
+      activeCategory === "전체" ||
       (activeCategory === "작조" && project.category === "시각디자인") ||
       (activeCategory === "업조" && project.companyType === "company") ||
-      (activeCategory === "글쓰" && project.tags.some(tag => tag.includes("문학"))) ||
-      (activeCategory === "성디바술" && project.tags.some(tag => tag.includes("디지털")));
-    
-    const matchesFilter = Object.entries(selectedFilters).some(([key, isSelected]) => {
-      if (!isSelected) return false;
-      return project.category === key || project.tags.some(tag => tag.includes(key));
-    });
-    
-    return matchesSearch && matchesCategory && (Object.values(selectedFilters).every(v => !v) || matchesFilter);
+      (activeCategory === "글쓰" &&
+        project.tags.some((tag: any) => tag.includes("문학"))) ||
+      (activeCategory === "성디바술" &&
+        project.tags.some((tag: any) => tag.includes("디지털")));
+
+    const matchesFilter = Object.entries(selectedFilters).some(
+      ([key, isSelected]) => {
+        if (!isSelected) return false;
+        return (
+          project.category === key ||
+          project.tags.some((tag: any) => tag.includes(key))
+        );
+      }
+    );
+
+    return (
+      matchesSearch &&
+      matchesCategory &&
+      (Object.values(selectedFilters).every((v) => !v) || matchesFilter)
+    );
   });
 
   return filtered.sort((a, b) => {
@@ -53,6 +67,6 @@ export function paginateProjects<T>(
 
   return {
     paginatedItems,
-    totalPages
+    totalPages,
   };
 }

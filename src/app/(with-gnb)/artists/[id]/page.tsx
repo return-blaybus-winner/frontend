@@ -198,7 +198,7 @@ export default function ArtistDetailPage() {
               <div className="bg-white p-6 rounded-lg shadow-sm">
                 <div className="flex justify-between items-center mb-4">
                   <h2 className="text-xl font-semibold">포트폴리오</h2>
-                  <Button variant="outline" size="sm" asChild>
+                  <Button variant="outline" asChild>
                     <Link href={`/artists/${params.id}/portfolio`}>
                       전체 보기
                     </Link>

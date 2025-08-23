@@ -237,10 +237,10 @@ export default function ArtistsPage() {
               </div>
 
               <div className="flex gap-2">
-                <Button variant="outline" size="sm" asChild className="flex-1">
+                <Button variant="outline" size="md" asChild className="flex-1">
                   <Link href={`/artists/${artist.id}`}>프로필 보기</Link>
                 </Button>
-                <Button size="sm" asChild className="flex-1">
+                <Button size="md" asChild className="flex-1">
                   <Link href={`/artists/${artist.id}/contact`}>연락하기</Link>
                 </Button>
               </div>

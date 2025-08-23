@@ -11,7 +11,8 @@ import {
 import { cn } from "@/lib/utils";
 
 interface Props {
-  project: Project;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  project: Project | any;
 }
 
 export default function MatchedProjectCard({ project }: Props) {

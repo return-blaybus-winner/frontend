@@ -1,6 +1,5 @@
-import { Project } from "@/app/_models/project";
-
-export const mockProjects: Project[] = [
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const mockProjects: any[] = [
   {
     id: "1",
     title: "브랜드 협업 작가 모집",

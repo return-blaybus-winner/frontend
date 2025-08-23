@@ -3,10 +3,13 @@ import ProjectGallery from "./project-gallery";
 import { PROJECT_DETAIL_SECTIONS } from "../_constants/project-detail";
 
 interface ProjectDetailsListProps {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   project: any;
 }
 
-export default function ProjectDetailsList({ project }: ProjectDetailsListProps) {
+export default function ProjectDetailsList({
+  project,
+}: ProjectDetailsListProps) {
   return (
     <div className="space-y-6">
       {PROJECT_DETAIL_SECTIONS.map((sectionKey) => {
