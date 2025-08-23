@@ -87,7 +87,7 @@ export default function ProjectsSidebar() {
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="모집인원" className="border-0">
+        <AccordionItem value="minRecruitNumber" className="border-0">
           <AccordionTrigger className="py-2 font-medium hover:no-underline">
             모집인원
           </AccordionTrigger>
@@ -96,7 +96,7 @@ export default function ProjectsSidebar() {
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="지역" className="border-0">
+        <AccordionItem value="location" className="border-0">
           <AccordionTrigger className="py-2 font-medium hover:no-underline">
             지역
           </AccordionTrigger>
@@ -105,7 +105,7 @@ export default function ProjectsSidebar() {
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="기간" className="border-0">
+        <AccordionItem value="period" className="border-0">
           <AccordionTrigger className="py-2 font-medium hover:no-underline">
             기간
           </AccordionTrigger>
