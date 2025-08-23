@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useEffect } from "react";
+import { useMemo, useEffect, useState } from "react";
 import ProjectsSidebar from "./_components/projects-sidebar";
 import ProjectTabs from "./_components/project-tabs";
 import FiltersBar from "./_components/filters-bar";
@@ -18,6 +18,7 @@ import Container from "@/app/_components/container";
 import { Project } from "@/app/_models/project";
 
 export default function ProjectsPage() {
+  const [activeTab, setActiveTab] = useState("ongoing");
   const searchHook = useProjectSearch();
   const uiHook = useProjectUI();
 
@@ -78,10 +79,7 @@ export default function ProjectsPage() {
         />
 
         <div className="flex-1">
-          <ProjectTabs
-            activeTab={uiHook.activeTab}
-            onTabChange={uiHook.setActiveTab}
-          />
+          <ProjectTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
           <FiltersBar
             activeCategory={searchHook.activeCategory}

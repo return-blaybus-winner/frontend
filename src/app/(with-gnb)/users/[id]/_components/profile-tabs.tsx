@@ -1,26 +1,26 @@
+import Tab from "@/app/(with-gnb)/_components/tab";
 import { ProfileTabProps } from "../types";
 
 const TABS = [
-  { id: 'profile', label: '프로필' },
-  { id: 'projects', label: '프로젝트' },
-  { id: 'proposals', label: '받은 제안' }
+  { id: "profile", label: "프로필" },
+  { id: "projects", label: "프로젝트" },
+  { id: "proposals", label: "받은 제안" },
 ] as const;
 
-export default function ProfileTabs({ activeTab, onTabChange }: ProfileTabProps) {
+export default function ProfileTabs({
+  activeTab,
+  onTabChange,
+}: ProfileTabProps) {
   return (
-    <div className="flex border-b border-gray-200 mb-6">
+    <div className="flex items-center gap-2 h-20 mb-8 border-b border-gray-300">
       {TABS.map((tab) => (
-        <button
+        <Tab
           key={tab.id}
-          onClick={() => onTabChange(tab.id)}
-          className={`px-4 py-3 text-sm font-medium transition-colors ${
-            activeTab === tab.id
-              ? 'text-gray-900 border-b-2 border-gray-900 font-semibold'
-              : 'text-gray-500 hover:text-gray-700'
-          }`}
-        >
-          {tab.label}
-        </button>
+          tab={tab.id}
+          label={tab.label}
+          activeTab={activeTab}
+          onTabChange={onTabChange}
+        />
       ))}
     </div>
   );

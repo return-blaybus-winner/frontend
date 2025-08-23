@@ -4,9 +4,8 @@ import { useState } from "react";
 
 export function useProjectUI() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [activeTab, setActiveTab] = useState("모집 중");
   const [likedProjects, setLikedProjects] = useState<Set<number>>(new Set());
-  
+
   const [expandedFilters, setExpandedFilters] = useState({
     분야: true,
     시각디자인: true,
@@ -17,18 +16,18 @@ export function useProjectUI() {
     모집인원: false,
     예산: false,
     지역: false,
-    기간: false
+    기간: false,
   });
 
   const toggleFilter = (filterName: string) => {
-    setExpandedFilters(prev => ({
+    setExpandedFilters((prev) => ({
       ...prev,
-      [filterName]: !prev[filterName as keyof typeof prev]
+      [filterName]: !prev[filterName as keyof typeof prev],
     }));
   };
 
   const toggleLike = (projectId: number) => {
-    setLikedProjects(prev => {
+    setLikedProjects((prev) => {
       const newSet = new Set(prev);
       if (newSet.has(projectId)) {
         newSet.delete(projectId);
@@ -43,13 +42,11 @@ export function useProjectUI() {
 
   return {
     currentPage,
-    activeTab,
     likedProjects,
     expandedFilters,
     setCurrentPage,
-    setActiveTab,
     toggleFilter,
     toggleLike,
-    resetPage
+    resetPage,
   };
 }

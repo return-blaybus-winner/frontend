@@ -7,11 +7,11 @@ import ProfileTabs from "./_components/profile-tabs";
 import ProfileContent from "./_components/profile-content";
 import { MOCK_USER } from "./constants";
 import type { UserProfile } from "./types";
+import SwitchCase from "@/components/utils/switch-case";
+import ProjectList from "@/app/(with-gnb)/users/[id]/_components/project-list";
 
 export default function UserPage() {
-  const [activeTab, setActiveTab] = useState<
-    "profile" | "projects" | "proposals"
-  >("profile");
+  const [activeTab, setActiveTab] = useState<string>("profile");
   const [isEditMode, setIsEditMode] = useState(false);
   const [editedUser, setEditedUser] = useState<UserProfile>(MOCK_USER);
   const isMe = true;
@@ -26,7 +26,7 @@ export default function UserPage() {
 
   const handleSave = () => {
     // TODO: API 호출로 사용자 데이터 저장
-    console.log('Saving user data:', editedUser);
+    console.log("Saving user data:", editedUser);
     setIsEditMode(false);
   };
 
@@ -35,41 +35,11 @@ export default function UserPage() {
     setIsEditMode(false);
   };
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case "profile":
-        return (
-          <ProfileContent 
-            user={isEditMode ? editedUser : user}
-            isMe={isMe}
-            isEditMode={isEditMode}
-            onUserChange={setEditedUser}
-            onSave={handleSave}
-            onCancel={handleCancel}
-          />
-        );
-      case "projects":
-        return (
-          <div className="text-center py-12">
-            <p className="text-gray-500">프로젝트 목록이 여기에 표시됩니다.</p>
-          </div>
-        );
-      case "proposals":
-        return (
-          <div className="text-center py-12">
-            <p className="text-gray-500">받은 제안 목록이 여기에 표시됩니다.</p>
-          </div>
-        );
-      default:
-        return null;
-    }
-  };
-
   return (
-    <Container>
-      <div className="flex flex-col lg:flex-row gap-8 py-8">
-        <UserSidebar 
-          user={user} 
+    <Container className="mt-8">
+      <div className="flex flex-col lg:flex-row gap-[80px]">
+        <UserSidebar
+          user={user}
           isMe={isMe}
           isEditMode={isEditMode}
           onEditToggle={handleEditToggle}
@@ -77,7 +47,29 @@ export default function UserPage() {
 
         <div className="flex-1">
           <ProfileTabs activeTab={activeTab} onTabChange={setActiveTab} />
-          {renderTabContent()}
+          <SwitchCase
+            value={activeTab}
+            caseBy={{
+              profile: (
+                <ProfileContent
+                  user={isEditMode ? editedUser : user}
+                  isMe={isMe}
+                  isEditMode={isEditMode}
+                  onUserChange={setEditedUser}
+                  onSave={handleSave}
+                  onCancel={handleCancel}
+                />
+              ),
+              projects: <ProjectList />,
+              proposals: (
+                <div className="text-center py-12">
+                  <p className="text-gray-500">
+                    받은 제안 목록이 여기에 표시됩니다.
+                  </p>
+                </div>
+              ),
+            }}
+          />
         </div>
       </div>
     </Container>

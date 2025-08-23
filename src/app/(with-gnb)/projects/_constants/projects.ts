@@ -1,8 +1,23 @@
 export const PAGE_TITLE = "프로젝트 찾기";
 
-export const TABS = ["모집 중", "진행"] as const;
+export const TABS = [
+  {
+    id: "ongoing",
+    label: "모집 중",
+  },
+  {
+    id: "completed",
+    label: "진행",
+  },
+] as const;
 
-export const CATEGORIES = ["전체", "작조", "업조", "글쓰", "성디바술"] as const;
+export const CATEGORIES = [
+  { id: "all", label: "전체" },
+  { id: "작조", label: "작조" },
+  { id: "업조", label: "업조" },
+  { id: "글쓰", label: "글쓰" },
+  { id: "성디바술", label: "성디바술" },
+] as const;
 
 export const SORT_OPTIONS = ["최신순", "인기순", "마감순"] as const;
 

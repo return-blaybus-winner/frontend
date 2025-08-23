@@ -28,8 +28,8 @@ export interface UserProfile {
 }
 
 export interface ProfileTabProps {
-  activeTab: "profile" | "projects" | "proposals";
-  onTabChange: (tab: "profile" | "projects" | "proposals") => void;
+  activeTab: string;
+  onTabChange: (tab: string) => void;
 }
 
 export interface UserSidebarProps {
