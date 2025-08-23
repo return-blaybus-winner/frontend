@@ -8,7 +8,7 @@ import If from "@/components/utils/if";
 import Link from "next/link";
 
 export default function UserMenu() {
-  const isLoggedIn = true; // Replace with actual authentication logic
+  const isLoggedIn = false; // Replace with actual authentication logic
   const isCompany = true; // Replace with actual company logic
 
   return (

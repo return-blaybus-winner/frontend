@@ -5,6 +5,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
+import { kakaoAuth, type KakaoUser } from "@/lib/kakao";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -13,10 +14,25 @@ export default function SignInPopover() {
 
   const [open, setOpen] = useState(false);
 
-  const handleSignIn = () => {
-    // Handle sign-in logic here
-    setOpen(false);
-    router.push("/signup");
+  const handleKakaoSignIn = async () => {
+    try {
+      const user: KakaoUser = await kakaoAuth.login();
+      console.log("카카오 로그인 성공:", user);
+
+      // TODO: 서버에 사용자 정보 전송 및 토큰 처리
+      // const response = await fetch('/api/auth/kakao', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify({ kakaoUser: user })
+      // });
+
+      setOpen(false);
+      // 로그인 성공 후 리다이렉트 또는 상태 업데이트
+      router.push("/");
+    } catch (error) {
+      console.error("카카오 로그인 실패:", error);
+      // 에러 처리 (토스트 메시지 등)
+    }
   };
 
   return (
@@ -39,7 +55,7 @@ export default function SignInPopover() {
         </div>
         <button
           className="bg-kakao hover:bg-kakao/80 flex items-center w-full h-[52px] rounded-[6px] px-[39px]"
-          onClick={handleSignIn}
+          onClick={handleKakaoSignIn}
         >
           <KakaoIcon />
           <span className="font-semibold text-base flex-1 text-center">
