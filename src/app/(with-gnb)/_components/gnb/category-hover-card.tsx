@@ -1,5 +1,6 @@
 "use client";
 
+import { useArtCategories } from "@/app/_hooks/use-art-categories";
 import ChevronRightIcon from "@/app/_icons/chevron-right-icon";
 import MenuIcon from "@/app/_icons/menu-icon";
 import SearchIcon from "@/app/_icons/search-icon";
@@ -19,6 +20,7 @@ import { useState } from "react";
 export function CategoryHoverCard() {
   const [open, setOpen] = useState(false);
   const router = useRouter();
+  const { data: categories } = useArtCategories();
   return (
     <>
       <HoverCard
@@ -58,25 +60,33 @@ export function CategoryHoverCard() {
               </Button>
             </div>
             <nav className="pt-5 px-5 grid grid-cols-5 text-base">
-              {menus.map((menu) => (
-                <div key={menu.id} className="w-[160px]">
+              <Link
+                href={`/projects`}
+                className="flex font-bold text-gray-800 hover:text-gray-600"
+                onClick={() => setOpen(false)}
+              >
+                <span className="text-lg">{"카테고리 전체"}</span>
+                <ChevronRightIcon className="size-6" />
+              </Link>
+              {categories?.map((category) => (
+                <div key={category.code} className="w-[160px]">
                   <Link
-                    href={`/projects/?category=${menu.id}`}
+                    href={`/projects/?category=${category.code}`}
                     className="flex items-end font-bold text-gray-800 hover:text-gray-600"
                     onClick={() => setOpen(false)}
                   >
-                    <span className="text-lg">{menu.title}</span>
+                    <span className="text-lg">{category.description}</span>
                     <ChevronRightIcon className="size-6" />
                   </Link>
                   <div className="mt-5 flex flex-col gap-3">
-                    {menu.submenus.map((submenu) => (
+                    {category.children.map((subcategory) => (
                       <Link
-                        href={`/projects/?category=${submenu.id}`}
-                        key={submenu.id}
+                        href={`/projects/?category=${subcategory.code}`}
+                        key={subcategory.code}
                         className="text-base text-gray-600 hover:text-gray-700 cursor-pointer"
                         onClick={() => setOpen(false)}
                       >
-                        {submenu.title}
+                        {subcategory.description}
                       </Link>
                     ))}
                   </div>
@@ -95,49 +105,3 @@ export function CategoryHoverCard() {
     </>
   );
 }
-
-const menus = [
-  { id: "all", title: "카테고리 전체", submenus: [] },
-  {
-    id: "visual_arts",
-    title: "시각예술",
-    submenus: [
-      { id: "painting", title: "회화", submenus: [] },
-      { id: "sculpture", title: "조소", submenus: [] },
-      { id: "printmaking", title: "판화", submenus: [] },
-      { id: "photo", title: "사진", submenus: [] },
-      { id: "digital_art", title: "디지털 아트", submenus: [] },
-    ],
-  },
-  {
-    id: "craft",
-    title: "공예",
-    submenus: [
-      { id: "ceramics", title: "도예", submenus: [] },
-      { id: "woodworking", title: "목공예", submenus: [] },
-      { id: "metalworking", title: "금속공예", submenus: [] },
-      { id: "textiles", title: "섬유공예", submenus: [] },
-      { id: "glass", title: "유리공예", submenus: [] },
-    ],
-  },
-  {
-    id: "literature",
-    title: "문학 창작",
-    submenus: [
-      { id: "fiction", title: "소설", submenus: [] },
-      { id: "poetry", title: "시 / 수필", submenus: [] },
-      { id: "screenplay", title: "시나리오", submenus: [] },
-      { id: "publishing", title: "출판기획", submenus: [] },
-    ],
-  },
-  {
-    id: "performance",
-    title: "퍼포먼스",
-    submenus: [
-      { id: "music", title: "음악", submenus: [] },
-      { id: "dance", title: "무용", submenus: [] },
-      { id: "theater", title: "연극", submenus: [] },
-      { id: "film", title: "영상", submenus: [] },
-    ],
-  },
-];
