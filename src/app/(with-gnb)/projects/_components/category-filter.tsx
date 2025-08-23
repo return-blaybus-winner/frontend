@@ -1,3 +1,5 @@
+"use client";
+
 import { Checkbox } from "@/components/ui/checkbox";
 import {
   Accordion,
@@ -5,85 +7,112 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FILTER_CATEGORIES } from "../_constants/projects";
+import { Category } from "@/app/_models/category";
+import { useRouter, useSearchParams } from "next/navigation";
 
 interface CategoryFilterProps {
-  expandedFilters: Record<string, boolean>;
-  selectedFilters: Record<string, boolean>;
-  onToggleExpanded: (category: string) => void;
-  onFilterChange: (filterKey: string, checked: boolean) => void;
+  categories: Category[];
 }
+export default function CategoryFilter({ categories }: CategoryFilterProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get("category") || "";
+  const categoryParams = categoryParam ? categoryParam.split(",") : [];
 
-export default function CategoryFilter({
-  expandedFilters,
-  selectedFilters,
-  onToggleExpanded,
-  onFilterChange,
-}: CategoryFilterProps) {
-  const handleCategorySelectAll = (
-    categoryKey: string,
-    subcategories: readonly string[]
-  ) => {
-    const allSubcategoriesSelected = subcategories.every(
-      (category) => selectedFilters[category as keyof typeof selectedFilters]
+  const handleCategorySelectAll = (category: Category) => {
+    const newParams = new URLSearchParams(searchParams);
+
+    const childrenCategories = category.children.map(
+      (subcategory) => subcategory.code
     );
 
-    subcategories.forEach((category) => {
-      onFilterChange(category, !allSubcategoriesSelected);
-    });
-  };
-
-  const isCategoryAllSelected = (subcategories: readonly string[]) => {
-    return subcategories.every(
-      (category) => selectedFilters[category as keyof typeof selectedFilters]
+    const allCategoryCodes = [category.code, ...childrenCategories];
+    const isAllSelected = allCategoryCodes.every((code) =>
+      categoryParams.includes(code)
     );
+
+    let updatedCategories;
+    if (isAllSelected) {
+      updatedCategories = categoryParams.filter(
+        (code) => !allCategoryCodes.includes(code)
+      );
+    } else {
+      updatedCategories = [
+        ...categoryParams,
+        ...allCategoryCodes.filter((code) => !categoryParams.includes(code)),
+      ];
+    }
+
+    if (updatedCategories.length > 0) {
+      newParams.set("category", updatedCategories.join(","));
+    } else {
+      newParams.delete("category");
+    }
+
+    const url = `/projects?${newParams.toString()}`.replace(/%2C/g, ",");
+    router.push(url);
   };
 
-  const expandedCategoryValues = Object.keys(expandedFilters).filter(
-    (key) =>
-      expandedFilters[key] &&
-      FILTER_CATEGORIES[key as keyof typeof FILTER_CATEGORIES]
-  );
+  const handleCategorySelect = (code: string) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (categoryParams.includes(code)) {
+      const updatedCategories = categoryParams.filter((cat) => cat !== code);
+      if (updatedCategories.length > 0) {
+        params.set("category", updatedCategories.join(","));
+      } else {
+        params.delete("category");
+      }
+    } else {
+      const updatedCategories = [...categoryParams, code];
+      params.set("category", updatedCategories.join(","));
+    }
+
+    const url = `/projects?${params.toString()}`.replace(/%2C/g, ",");
+    router.push(url);
+  };
+
+  const isCategoryAllSelected = (category: Category) =>
+    [category, ...category.children].every((subcategory) =>
+      categoryParams.includes(subcategory.code)
+    );
+
+  const isCategorySelected = (code: string) => categoryParams.includes(code);
 
   return (
-    <Accordion type="multiple" value={expandedCategoryValues}>
-      {Object.entries(FILTER_CATEGORIES).map(([categoryKey, subcategories]) => (
+    <Accordion type="multiple">
+      {categories.map((category) => (
         <AccordionItem
-          key={categoryKey}
-          value={categoryKey}
+          key={category.code}
+          value={category.code}
           className="border-0"
         >
           <div className="inline-flex w-full items-center space-x-6 px-4">
             <Checkbox
-              checked={isCategoryAllSelected(subcategories)}
-              onCheckedChange={() => {
-                handleCategorySelectAll(categoryKey, subcategories);
-              }}
+              checked={isCategoryAllSelected(category)}
+              onCheckedChange={() => handleCategorySelectAll(category)}
               onClick={(e) => e.stopPropagation()}
             />
             <AccordionTrigger
-              onClick={() => onToggleExpanded(categoryKey)}
               className={`flex justify-between hover:no-underline`}
             >
-              <span className="text-gray-800 flex-1">{categoryKey}</span>
+              <span className="text-gray-800 flex-1">
+                {category.description}
+              </span>
             </AccordionTrigger>
           </div>
           <AccordionContent className="mt-2 bg-gray-200 pb-0">
-            {subcategories.map((category) => (
+            {category.children.map((subcategory) => (
               <label
-                key={category}
+                key={subcategory.code}
                 className="flex items-center space-x-6 h-12 px-4"
               >
                 <Checkbox
-                  checked={
-                    selectedFilters[category as keyof typeof selectedFilters]
-                  }
-                  onCheckedChange={(checked) =>
-                    onFilterChange(category, !!checked)
-                  }
+                  checked={isCategorySelected(subcategory.code)}
+                  onCheckedChange={() => handleCategorySelect(subcategory.code)}
                   className="border-[#999999] data-[state=checked]:bg-[#999999] data-[state=checked]:text-white"
                 />
-                <span className="text-gray-700">{category}</span>
+                <span className="text-gray-700">{subcategory.description}</span>
               </label>
             ))}
           </AccordionContent>

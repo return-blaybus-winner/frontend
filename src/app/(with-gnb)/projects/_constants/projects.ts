@@ -32,39 +32,58 @@ export const FILTER_CATEGORIES = {
 
 export const TYPE_OPTIONS = ["개인", "팀", "기업"] as const;
 
-export const RECRUIT_COUNT_OPTIONS = [
-  "1명",
-  "2-5명",
-  "6-10명",
-  "10명 이상",
-] as const;
-
-export const BUDGET_OPTIONS = [
-  "100만원 이하",
-  "100-300만원",
-  "300-500만원",
-  "500-1000만원",
-  "1000만원 이상",
+export const RECRUIT_COUNT_OPTIONS: {
+  min: number;
+  max?: number | undefined;
+  description: string;
+}[] = [
+  {
+    min: 0,
+    max: 1,
+    description: "1명",
+  },
+  {
+    min: 2,
+    max: 5,
+    description: "2-5명",
+  },
+  {
+    min: 6,
+    max: 10,
+    description: "6-10명",
+  },
+  {
+    min: 10,
+    description: "10명 이상",
+  },
 ] as const;
 
 export const LOCATION_OPTIONS = [
-  "서울",
-  "경기",
-  "부산",
-  "대구",
-  "인천",
-  "광주",
-  "대전",
-  "울산",
-  "온라인",
+  { code: "11000", description: "서울특별시" },
+  { code: "26000", description: "부산광역시" },
+  { code: "27000", description: "대구광역시" },
+  { code: "28000", description: "인천광역시" },
+  { code: "29000", description: "광주광역시" },
+  { code: "30000", description: "대전광역시" },
+  { code: "31000", description: "울산광역시" },
+  { code: "36110", description: "세종특별자치시" },
+  { code: "41000", description: "경기도" },
+  { code: "43000", description: "충청북도" },
+  { code: "44000", description: "충청남도" },
+  { code: "46000", description: "전라남도" },
+  { code: "47000", description: "경상북도" },
+  { code: "48000", description: "경상남도" },
+  { code: "50000", description: "제주특별자치도" },
+  { code: "51000", description: "강원특별자치도" },
+  { code: "52000", description: "전북특별자치도" },
 ] as const;
 
 export const DURATION_OPTIONS = [
-  "1주 이내",
-  "1주-1개월",
-  "1-3개월",
-  "3-6개월",
-  "6개월 이상",
+  { value: "7", label: "1주 이내" },
+  { value: "30", label: "1주-1개월" },
+  { value: "90", label: "1-3개월" },
+  { value: "180", label: "3-6개월" },
+  { value: "9999999", label: "6개월 이상" },
 ] as const;
 
 export const FILTER_SECTIONS = {

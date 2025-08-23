@@ -1,35 +1,21 @@
+"use client";
+
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-import { FilterOption } from "./filter-section";
 import CategoryFilter from "./category-filter";
-import {
-  TYPE_OPTIONS,
-  RECRUIT_COUNT_OPTIONS,
-  BUDGET_OPTIONS,
-  LOCATION_OPTIONS,
-  DURATION_OPTIONS,
-} from "../_constants/projects";
+import { useProjectCategories } from "@/app/_hooks/use-project-categories";
+import { useArtCategories } from "@/app/_hooks/use-art-categories";
+import PeriodFilter from "@/app/(with-gnb)/projects/_components/period-filter";
+import RecruitNumberFilter from "@/app/(with-gnb)/projects/_components/recruit-number-filter";
+import LocationFilter from "@/app/(with-gnb)/projects/_components/location-filter";
 
-interface ProjectsSidebarProps {
-  expandedFilters: Record<string, boolean>;
-  selectedFilters: Record<string, boolean>;
-  onToggleFilter: (filterName: string) => void;
-  onFilterChange: (filterKey: string, checked: boolean) => void;
-}
-
-export default function ProjectsSidebar({
-  expandedFilters,
-  selectedFilters,
-  onToggleFilter,
-  onFilterChange,
-}: ProjectsSidebarProps) {
-  const expandedValues = Object.keys(expandedFilters).filter(
-    (key) => expandedFilters[key]
-  );
+export default function ProjectsSidebar() {
+  const { data: projectCategories } = useProjectCategories();
+  const { data: artCategories } = useArtCategories();
 
   return (
     <div className="w-[300px] bg-white rounded-lg h-fit">
@@ -40,91 +26,49 @@ export default function ProjectsSidebar({
         필터
       </div>
 
-      <Accordion type="multiple" value={expandedValues} className="w-full">
+      <Accordion type="multiple" className="w-full">
         <AccordionItem value="분야" className="border-0">
-          <AccordionTrigger
-            onClick={() => onToggleFilter("분야")}
-            className="py-2 font-medium hover:no-underline"
-          >
+          <AccordionTrigger className="py-2 font-medium hover:no-underline">
             분야
           </AccordionTrigger>
           <AccordionContent>
-            <CategoryFilter
-              expandedFilters={expandedFilters}
-              selectedFilters={selectedFilters}
-              onToggleExpanded={onToggleFilter}
-              onFilterChange={onFilterChange}
-            />
+            <CategoryFilter categories={artCategories ?? []} />
           </AccordionContent>
         </AccordionItem>
 
         <AccordionItem value="유형" className="border-0">
-          <AccordionTrigger
-            onClick={() => onToggleFilter("유형")}
-            className="py-2 font-medium hover:no-underline"
-          >
+          <AccordionTrigger className="py-2 font-medium hover:no-underline">
             유형
           </AccordionTrigger>
           <AccordionContent>
-            {TYPE_OPTIONS.map((type) => (
-              <FilterOption key={type} label={type} />
-            ))}
+            <CategoryFilter categories={projectCategories ?? []} />
           </AccordionContent>
         </AccordionItem>
 
         <AccordionItem value="모집인원" className="border-0">
-          <AccordionTrigger
-            onClick={() => onToggleFilter("모집인원")}
-            className="py-2 font-medium hover:no-underline"
-          >
+          <AccordionTrigger className="py-2 font-medium hover:no-underline">
             모집인원
           </AccordionTrigger>
           <AccordionContent>
-            {RECRUIT_COUNT_OPTIONS.map((count) => (
-              <FilterOption key={count} label={count} />
-            ))}
-          </AccordionContent>
-        </AccordionItem>
-
-        <AccordionItem value="예산" className="border-0">
-          <AccordionTrigger
-            onClick={() => onToggleFilter("예산")}
-            className="py-2 font-medium hover:no-underline"
-          >
-            예산
-          </AccordionTrigger>
-          <AccordionContent>
-            {BUDGET_OPTIONS.map((budget) => (
-              <FilterOption key={budget} label={budget} />
-            ))}
+            <RecruitNumberFilter />
           </AccordionContent>
         </AccordionItem>
 
         <AccordionItem value="지역" className="border-0">
-          <AccordionTrigger
-            onClick={() => onToggleFilter("지역")}
-            className="py-2 font-medium hover:no-underline"
-          >
+          <AccordionTrigger className="py-2 font-medium hover:no-underline">
             지역
           </AccordionTrigger>
           <AccordionContent>
-            {LOCATION_OPTIONS.map((location) => (
-              <FilterOption key={location} label={location} />
-            ))}
+            <LocationFilter />
           </AccordionContent>
         </AccordionItem>
 
         <AccordionItem value="기간" className="border-0">
-          <AccordionTrigger
-            onClick={() => onToggleFilter("기간")}
-            className="py-2 font-medium hover:no-underline"
-          >
+          <AccordionTrigger className="py-2 font-medium hover:no-underline">
             기간
           </AccordionTrigger>
           <AccordionContent>
-            {DURATION_OPTIONS.map((duration) => (
-              <FilterOption key={duration} label={duration} />
-            ))}
+            <PeriodFilter />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

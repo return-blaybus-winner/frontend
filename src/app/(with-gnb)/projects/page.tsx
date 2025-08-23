@@ -71,12 +71,7 @@ export default function ProjectsPage() {
   return (
     <Container className="mt-10">
       <div className="flex gap-20">
-        <ProjectsSidebar
-          expandedFilters={uiHook.expandedFilters}
-          selectedFilters={searchHook.selectedFilters}
-          onToggleFilter={uiHook.toggleFilter}
-          onFilterChange={searchHook.handleFilterChange}
-        />
+        <ProjectsSidebar />
 
         <div className="flex-1">
           <ProjectTabs activeTab={activeTab} onTabChange={setActiveTab} />
