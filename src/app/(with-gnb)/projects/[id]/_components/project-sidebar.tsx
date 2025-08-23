@@ -4,35 +4,30 @@ import { Calendar } from "lucide-react";
 import { Separator } from "@/components/ui/separator";
 import Title from "./title";
 import ProjectInfoGrid from "./project-info-grid";
-import { SIDEBAR_INFO_LABELS, ACTION_BUTTON_TEXT } from "../_constants/project-detail";
+import {
+  SIDEBAR_INFO_LABELS,
+  ACTION_BUTTON_TEXT,
+} from "../_constants/project-detail";
 
 interface ProjectSidebarProps {
-  project: {
-    title: string;
-    period: string;
-    periodStatus: string;
-    projectInfo: {
-      budget: string;
-      difficulty: string;
-      applicants: string;
-      rating: number;
-    };
-  };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  project: any;
 }
 
 export default function ProjectSidebar({ project }: ProjectSidebarProps) {
   return (
     <div className="space-y-6 w-[426px] sticky top-[120px] p-8 pt-6 border border-gray-300 rounded-[12px]">
-      <h1 className="text-2xl font-bold text-gray-900 mb-[50px]">
-        {project.title}
-      </h1>
+      <div className="mb-[50px] flex flex-col gap-2">
+        <h1 className="text-2xl font-bold text-gray-900">{project.title}</h1>
+        <p className="text-gray-700 text-base">{project.description}</p>
+      </div>
 
       <div className="space-y-8">
         <Title>{SIDEBAR_INFO_LABELS.RECRUITMENT_PERIOD}</Title>
         <div className="space-y-6">
-          <div className="flex items-center gap-2 text-gray-800 py-[6px]">
+          <div className="flex items-center gap-2 py-[6px] border border-gray-300 bg-gray-100 rounded-[6px] px-6 text-gray-600">
             <Calendar className="size-5" />
-            <span className="text-lg text-gray-800">{project.period}</span>
+            <span className="text-[18px] text-gray-500">{project.period}</span>
           </div>
           <Badge>{project.periodStatus}</Badge>
         </div>

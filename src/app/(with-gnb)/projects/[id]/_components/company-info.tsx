@@ -10,14 +10,14 @@ interface CompanyInfoProps {
 
 export default function CompanyInfo({ company }: CompanyInfoProps) {
   return (
-    <div className="flex items-center gap-3">
-      <Avatar className="w-12 h-12">
+    <div className="flex items-center gap-4 mt-6">
+      <Avatar className="size-[60px]">
         <AvatarImage src={company.avatar} alt={company.name} />
         <AvatarFallback>JK</AvatarFallback>
       </Avatar>
-      <div>
-        <p className="text-sm text-gray-600">{company.description}</p>
-        <p className="font-semibold">{company.name}</p>
+      <div className="flex flex-col gap-1">
+        <p className="text-base text-[#505050]">{company.description}</p>
+        <p className="text-[20px] font-semibold">{company.name}</p>
       </div>
     </div>
   );

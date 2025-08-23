@@ -10,7 +10,7 @@ import ProjectSidebar from "./_components/project-sidebar";
 export default function ProjectDetailPage() {
   return (
     <Container className="mt-10">
-      <div className="flex gap-[50px] items-start">
+      <div className="flex gap-[60px] items-start">
         <div className="flex-1">
           <ProjectImage />
           <CompanyInfo company={mockProject.company} />
