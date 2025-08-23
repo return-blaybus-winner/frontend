@@ -1,25 +1,34 @@
-import { CATEGORIES } from "../_constants/projects";
-import CategoryButton from "@/app/(with-gnb)/_components/category-button";
+import { Category } from "@/app/_models/category";
+import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 interface CategoryButtonsProps {
-  activeCategory: string;
-  onCategoryChange: (category: string) => void;
+  categories: Category[];
+  activeCategories: string[];
+  onCategoryChange: (category: Category) => void;
 }
 
 export default function CategoryButtons({
-  activeCategory,
+  categories,
+  activeCategories,
   onCategoryChange,
 }: CategoryButtonsProps) {
   return (
     <div className="flex gap-2 flex-wrap items-center">
-      {CATEGORIES.map((category) => (
-        <CategoryButton
-          key={category.id}
-          id={category.id}
-          category={category.label}
-          activeCategory={activeCategory}
-          onCategoryChange={onCategoryChange}
-        />
+      {categories.map((category) => (
+        <Button
+          key={category.code}
+          onClick={() => onCategoryChange(category)}
+          size={"sm"}
+          variant={"outline"}
+          className={cn(
+            "px-5 py-1 rounded-full",
+            activeCategories.includes(category.code) &&
+              "bg-black text-white hover:bg-black"
+          )}
+        >
+          {category.description}
+        </Button>
       ))}
     </div>
   );

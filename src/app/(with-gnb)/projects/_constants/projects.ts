@@ -2,12 +2,12 @@ export const PAGE_TITLE = "프로젝트 찾기";
 
 export const TABS = [
   {
-    id: "ongoing",
+    id: "RECRUITING",
     label: "모집 중",
   },
   {
-    id: "completed",
-    label: "진행",
+    id: "COMPLETED",
+    label: "완료",
   },
 ] as const;
 

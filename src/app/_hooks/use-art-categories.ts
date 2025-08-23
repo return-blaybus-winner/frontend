@@ -11,3 +11,18 @@ export function useArtCategories() {
     gcTime: 60 * 60 * 1000,
   });
 }
+
+export function useThirdLevelCategories(parentIds: string[]) {
+  const { data: artCategories } = useArtCategories();
+
+  const thirdLevelCategories = artCategories?.flatMap((category) =>
+    category.children.flatMap((child) => child.children)
+  );
+
+  return (
+    thirdLevelCategories?.filter(
+      (category) =>
+        category.parentCode && parentIds.includes(category.parentCode)
+    ) || []
+  );
+}
