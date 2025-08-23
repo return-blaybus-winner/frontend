@@ -9,16 +9,19 @@ export default function RecruitNumberFilter() {
   const minRecruitNumberParam = searchParams.get("minRecruitNumber") || "";
   const maxRecruitNumberParam = searchParams.get("maxRecruitNumber") || "";
 
-  const currentValue = RECRUIT_COUNT_OPTIONS.find(
-    (option) =>
-      Number(minRecruitNumberParam) === option.min &&
-      Number(maxRecruitNumberParam) === (option.max || 0)
-  )?.description || "";
+  const currentValue =
+    RECRUIT_COUNT_OPTIONS.find(
+      (option) =>
+        Number(minRecruitNumberParam) === option.min &&
+        Number(maxRecruitNumberParam) === (option.max || 0)
+    )?.description || "";
 
   const handleRecruitNumberChange = (value: string) => {
-    const option = RECRUIT_COUNT_OPTIONS.find((opt) => opt.description === value);
+    const option = RECRUIT_COUNT_OPTIONS.find(
+      (opt) => opt.description === value
+    );
     const params = new URLSearchParams(searchParams);
-    
+
     if (option) {
       params.set("minRecruitNumber", option.min.toString());
       if (option.max) {
@@ -30,8 +33,10 @@ export default function RecruitNumberFilter() {
       params.delete("minRecruitNumber");
       params.delete("maxRecruitNumber");
     }
-    
-    router.push(`?${params.toString()}`);
+
+    router.push(`?${params.toString()}`, {
+      scroll: false,
+    });
   };
 
   return (

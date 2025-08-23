@@ -50,7 +50,9 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
     }
 
     const url = `/projects?${newParams.toString()}`.replace(/%2C/g, ",");
-    router.push(url);
+    router.push(url, {
+      scroll: false,
+    });
   };
 
   const handleCategorySelect = (code: string) => {
@@ -79,8 +81,27 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
 
   const isCategorySelected = (code: string) => categoryParams.includes(code);
 
+  const getParent = (code: string) => {
+    return categories.find((category) =>
+      category.children.some((child) => child.code === code)
+    );
+  };
+
+  const computedValues = () => {
+    const newValues = categoryParams;
+
+    newValues.forEach((code) => {
+      const parent = getParent(code);
+      if (parent) {
+        newValues.push(parent.code);
+      }
+    });
+
+    return newValues;
+  };
+
   return (
-    <Accordion type="multiple">
+    <Accordion type="multiple" defaultValue={computedValues()}>
       {categories.map((category) => (
         <AccordionItem
           key={category.code}

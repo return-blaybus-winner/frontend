@@ -12,7 +12,9 @@ export default function LocationFilter() {
     const params = new URLSearchParams(searchParams);
 
     if (locationParams.includes(code)) {
-      const updatedLocations = locationParams.filter((location) => location !== code);
+      const updatedLocations = locationParams.filter(
+        (location) => location !== code
+      );
       if (updatedLocations.length > 0) {
         params.set("location", updatedLocations.join(","));
       } else {
@@ -24,7 +26,9 @@ export default function LocationFilter() {
     }
 
     const url = `/projects?${params.toString()}`.replace(/%2C/g, ",");
-    router.push(url);
+    router.push(url, {
+      scroll: false,
+    });
   };
 
   const isLocationSelected = (code: string) => locationParams.includes(code);

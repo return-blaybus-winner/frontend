@@ -15,7 +15,9 @@ export default function PeriodFilter() {
     } else {
       params.delete("period");
     }
-    router.push(`?${params.toString()}`);
+    router.push(`?${params.toString()}`, {
+      scroll: false,
+    });
   };
 
   return (

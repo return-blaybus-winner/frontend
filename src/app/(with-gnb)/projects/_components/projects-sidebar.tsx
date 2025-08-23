@@ -12,10 +12,48 @@ import { useArtCategories } from "@/app/_hooks/use-art-categories";
 import PeriodFilter from "@/app/(with-gnb)/projects/_components/period-filter";
 import RecruitNumberFilter from "@/app/(with-gnb)/projects/_components/recruit-number-filter";
 import LocationFilter from "@/app/(with-gnb)/projects/_components/location-filter";
+import { useSearchParams } from "next/navigation";
 
 export default function ProjectsSidebar() {
+  const searchParams = useSearchParams();
+
   const { data: projectCategories } = useProjectCategories();
   const { data: artCategories } = useArtCategories();
+
+  const categoryParams = searchParams.get("category") || "";
+
+  function hasArtCategories() {
+    if (!artCategories) return false;
+    const codes = categoryParams.split(",");
+    const artCategoryCodes = [
+      ...artCategories.flatMap((cat) => cat.code),
+      ...artCategories.flatMap((cat) =>
+        cat.children.map((child) => child.code)
+      ),
+    ];
+    return codes.some((code) => artCategoryCodes.includes(code));
+  }
+
+  function hasProjectCategories() {
+    if (!projectCategories) return false;
+    const codes = categoryParams.split(",");
+    const projectCategoryCodes = [
+      ...projectCategories.flatMap((cat) => cat.code),
+      ...projectCategories.flatMap((cat) =>
+        cat.children.map((child) => child.code)
+      ),
+    ];
+    return codes.some((code) => projectCategoryCodes.includes(code));
+  }
+
+  const keys = Array.from(searchParams.keys());
+
+  const getDefaultValues = () => {
+    const arr = keys;
+    if (hasArtCategories()) arr.push("category1");
+    if (hasProjectCategories()) arr.push("category2");
+    return arr;
+  };
 
   return (
     <div className="w-[300px] bg-white rounded-lg h-fit">
@@ -26,8 +64,12 @@ export default function ProjectsSidebar() {
         필터
       </div>
 
-      <Accordion type="multiple" className="w-full">
-        <AccordionItem value="분야" className="border-0">
+      <Accordion
+        type="multiple"
+        className="w-full"
+        defaultValue={getDefaultValues()}
+      >
+        <AccordionItem value="category1" className="border-0">
           <AccordionTrigger className="py-2 font-medium hover:no-underline">
             분야
           </AccordionTrigger>
@@ -36,7 +78,7 @@ export default function ProjectsSidebar() {
           </AccordionContent>
         </AccordionItem>
 
-        <AccordionItem value="유형" className="border-0">
+        <AccordionItem value="category2" className="border-0">
           <AccordionTrigger className="py-2 font-medium hover:no-underline">
             유형
           </AccordionTrigger>

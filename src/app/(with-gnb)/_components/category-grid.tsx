@@ -8,11 +8,14 @@ export default function CategoryGrid() {
   const { data: categories } = useProjectCategories();
   return (
     <div className="mx-auto flex items-center">
-      {categories?.map((item, index) => (
+      {categories?.map((category, index) => (
         <Link
-          href={`/projects/?category=${item.code}`}
+          href={`/projects/?category=${[
+            ...category.children.flatMap((child) => child.code),
+            category.code,
+          ].join(",")}`}
           className="px-4 flex flex-col gap-1"
-          key={item.code}
+          key={category.code}
         >
           <div className="relative h-[100px] w-[124px] flex items-center justify-center">
             <Image
@@ -22,7 +25,7 @@ export default function CategoryGrid() {
               fill
             />
           </div>
-          <div className="text-base text-center">{item.description}</div>
+          <div className="text-base text-center">{category.description}</div>
         </Link>
       ))}
     </div>
