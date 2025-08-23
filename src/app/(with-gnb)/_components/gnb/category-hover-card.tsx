@@ -71,7 +71,10 @@ export function CategoryHoverCard() {
               {categories?.map((category) => (
                 <div key={category.code} className="w-[160px]">
                   <Link
-                    href={`/projects/?category=${category.code}`}
+                    href={`/projects/?category=${[
+                      ...category.children.flatMap((cat) => cat.code),
+                      category.code,
+                    ]}`}
                     className="flex items-end font-bold text-gray-800 hover:text-gray-600"
                     onClick={() => setOpen(false)}
                   >

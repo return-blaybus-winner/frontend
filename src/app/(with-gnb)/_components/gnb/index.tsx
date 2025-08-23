@@ -13,8 +13,8 @@ export default function GNB() {
 
         <nav className="flex items-center space-x-8 pl-[95px] flex-1 h-full">
           <CategoryHoverCard />
-          <Link href="/artist">예술가 찾기</Link>
-          <Link href="/company">기업찾기</Link>
+          <Link href="/artists">예술가 찾기</Link>
+          <Link href="/projects">프로젝트 찾기</Link>
         </nav>
         <UserMenu />
       </div>

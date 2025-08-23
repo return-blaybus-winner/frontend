@@ -1,14 +1,8 @@
 import { useThirdLevelCategories } from "@/app/_hooks/use-art-categories";
 import CategoryButtons from "./category-buttons";
-import SortSelector from "./sort-selector";
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface FiltersBarProps {
-  sortBy: string;
-  onSortChange: (sort: string) => void;
-}
-
-export default function FiltersBar({ sortBy, onSortChange }: FiltersBarProps) {
+export default function FiltersBar() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category") || "";
@@ -34,6 +28,10 @@ export default function FiltersBar({ sortBy, onSortChange }: FiltersBarProps) {
     router.push(url);
   };
 
+  if (thirdLevelCategories.length === 0) {
+    return null;
+  }
+
   return (
     <div className="flex items-start justify-between mb-6">
       <div className="flex items-center gap-4 mt-2">
@@ -44,9 +42,6 @@ export default function FiltersBar({ sortBy, onSortChange }: FiltersBarProps) {
             handleCategoryChange(category.code);
           }}
         />
-      </div>
-      <div>
-        <SortSelector sortBy={sortBy} onSortChange={onSortChange} />
       </div>
     </div>
   );

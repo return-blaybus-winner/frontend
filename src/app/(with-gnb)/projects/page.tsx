@@ -74,11 +74,7 @@ export default function ProjectsPage() {
 
         <div className="flex-1">
           <ProjectTabs />
-
-          <FiltersBar
-            sortBy={searchHook.sortBy}
-            onSortChange={searchHook.setSortBy}
-          />
+          <FiltersBar />
 
           <div className="mt-4">
             <ProjectList
