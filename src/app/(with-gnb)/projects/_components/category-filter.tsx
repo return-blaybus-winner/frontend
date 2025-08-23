@@ -53,21 +53,21 @@ export default function CategoryFilter({
           value={categoryKey}
           className="border-0"
         >
-          <AccordionTrigger
-            onClick={() => onToggleExpanded(categoryKey)}
-            className={`py-2 px-4 hover:no-underline`}
-          >
-            <div className="flex items-center space-x-6 w-full">
-              <Checkbox
-                checked={isCategoryAllSelected(subcategories)}
-                onCheckedChange={() => {
-                  handleCategorySelectAll(categoryKey, subcategories);
-                }}
-                onClick={(e) => e.stopPropagation()}
-              />
-              <span className="text-gray-800">{categoryKey}</span>
-            </div>
-          </AccordionTrigger>
+          <div className="inline-flex w-full items-center space-x-6 px-4">
+            <Checkbox
+              checked={isCategoryAllSelected(subcategories)}
+              onCheckedChange={() => {
+                handleCategorySelectAll(categoryKey, subcategories);
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+            <AccordionTrigger
+              onClick={() => onToggleExpanded(categoryKey)}
+              className={`flex justify-between hover:no-underline`}
+            >
+              <span className="text-gray-800 flex-1">{categoryKey}</span>
+            </AccordionTrigger>
+          </div>
           <AccordionContent className="mt-2 bg-gray-200 pb-0">
             {subcategories.map((category) => (
               <label
