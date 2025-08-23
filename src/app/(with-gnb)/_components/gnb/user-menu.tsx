@@ -1,8 +1,8 @@
 "use client";
 
 import SignInPopover from "@/app/(with-gnb)/_components/gnb/sign-in-popover";
+import UserDropdown from "@/app/(with-gnb)/_components/gnb/user-dropdown";
 import ChatIcon from "@/app/_icons/chat-icon";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import If from "@/components/utils/if";
 import Link from "next/link";
@@ -28,10 +28,7 @@ export default function UserMenu() {
           <Button variant="ghost" className="rounded-full">
             <ChatIcon />
           </Button>
-          <Avatar>
-            <AvatarImage src="" />
-            <AvatarFallback>B</AvatarFallback>
-          </Avatar>
+          <UserDropdown />
         </div>
       </If>
       <If condition={!isLoggedIn}>
