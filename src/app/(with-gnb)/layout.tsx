@@ -14,6 +14,7 @@ export default async function WithGNBLayout({ children }: Props) {
   const queryClient = await prefetchQueries();
 
   const userData = queryClient.getQueryData(USER_QUERY_KEY);
+  console.log("🚀 ~ WithGNBLayout ~ userData:", userData);
 
   if (userData) {
     if (!(userData as User).role) redirect("/signup");

@@ -10,17 +10,17 @@ export async function prefetchQueries() {
   const queryClient = getQueryClient();
 
   await Promise.all([
-    await queryClient.prefetchQuery({
+    queryClient.prefetchQuery({
       queryKey: PROJECT_CATEGORIES_QUERY_KEY,
       queryFn: getProjectCategories,
       staleTime: 30 * 60 * 1000,
     }),
-    await queryClient.prefetchQuery({
+    queryClient.prefetchQuery({
       queryKey: ART_CATEGORIES_QUERY_KEY,
       queryFn: getArtCategories,
       staleTime: 30 * 60 * 1000,
     }),
-    await queryClient.prefetchQuery({
+    queryClient.prefetchQuery({
       queryKey: USER_QUERY_KEY,
       queryFn: getUserForServer,
       staleTime: 30 * 60 * 1000,
