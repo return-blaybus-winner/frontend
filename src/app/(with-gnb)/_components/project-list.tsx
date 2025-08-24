@@ -1,8 +1,8 @@
 import ProjectCard from "@/app/(with-gnb)/_components/project-card";
-import { Project } from "@/app/_models/project";
+import { ProjectForList } from "@/app/_models/project";
 
 interface ProjectListProps {
-  projects: Project[];
+  projects: ProjectForList[];
   isLoading?: boolean;
 }
 

@@ -31,7 +31,7 @@ export const companySchema = z.object({
 export const artistSchema = z.object({
   ...baseSchema,
   activeArea: z.string().min(1, { message: "활동 지역을 선택해주세요." }),
-  portfolioImage: fileSchema,
+  portfolioImage: fileSchema.optional(),
   portfolio: z.string().optional(),
 });
 

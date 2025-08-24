@@ -1,5 +1,5 @@
 import HeartIcon from "@/app/_icons/heart-icon";
-import { Project } from "@/app/_models/project";
+import { ProjectForList } from "@/app/_models/project";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -16,7 +16,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
-  project: Project;
+  project: ProjectForList;
   className?: string;
 }
 

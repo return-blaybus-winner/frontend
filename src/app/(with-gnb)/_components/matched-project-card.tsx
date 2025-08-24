@@ -1,5 +1,5 @@
 import HeartIcon from "@/app/_icons/heart-icon";
-import { Project } from "@/app/_models/project";
+import { ProjectForList } from "@/app/_models/project";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils";
 
 interface Props {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  project: Project | any;
+  project: ProjectForList | any;
 }
 
 export default function MatchedProjectCard({ project }: Props) {

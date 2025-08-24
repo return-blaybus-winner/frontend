@@ -1,17 +1,14 @@
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Calendar } from "lucide-react";
-import { Separator } from "@/components/ui/separator";
 import Title from "./title";
-import ProjectInfoGrid from "./project-info-grid";
 import {
   SIDEBAR_INFO_LABELS,
   ACTION_BUTTON_TEXT,
 } from "../_constants/project-detail";
+import { Project } from "@/app/_models/project";
 
 interface ProjectSidebarProps {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  project: any;
+  project: Project;
 }
 
 export default function ProjectSidebar({ project }: ProjectSidebarProps) {
@@ -27,12 +24,10 @@ export default function ProjectSidebar({ project }: ProjectSidebarProps) {
         <div className="space-y-6">
           <div className="flex items-center gap-2 py-[6px] border border-gray-300 bg-gray-100 rounded-[6px] px-6 text-gray-600">
             <Calendar className="size-5" />
-            <span className="text-[18px] text-gray-500">{project.period}</span>
+            <span className="text-[18px] text-gray-500">{`${project.projectApplyStartDate} - ${project.projectApplyEndDate}`}</span>
           </div>
-          <Badge>{project.periodStatus}</Badge>
         </div>
-        <Separator />
-        <ProjectInfoGrid projectInfo={project.projectInfo} />
+
         <Button
           className="w-full bg-red-500 hover:bg-red-600 text-white"
           size="lg"

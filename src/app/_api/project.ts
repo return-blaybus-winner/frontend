@@ -1,8 +1,14 @@
 import { BASE_URL } from "@/app/_constants/api";
-import { Page, Project } from "@/app/_models/project";
+import { Page, Project, ProjectForList } from "@/app/_models/project";
+
+const DEFAULT_HEADERS = {
+  "Content-Type": "application/json",
+} as const;
+
+const CACHE_CONFIG = { revalidate: 3600 } as const;
 
 export async function getProject(id: string): Promise<Project> {
-  const response = await fetch(`${BASE_URL}/v0/project${id}`, {
+  const response = await fetch(`${BASE_URL}/v0/project/${id}`, {
     headers: DEFAULT_HEADERS,
     next: CACHE_CONFIG,
   });
@@ -27,6 +33,75 @@ export type GetProjectsParams = {
   page?: string | null;
   size?: string | null;
 };
+
+export async function getProjects(
+  params: GetProjectsParams
+): Promise<Page<ProjectForList>> {
+  const searchParams = buildSearchParams(params);
+
+  const response = await fetch(
+    `${BASE_URL}/v2/projects?${searchParams.toString()}`,
+    {
+      headers: DEFAULT_HEADERS,
+      next: CACHE_CONFIG,
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Failed to fetch projects");
+  }
+
+  return response.json();
+}
+
+export async function createProject(
+  project: ProjectForList,
+  images: File[]
+): Promise<ProjectForList> {
+  const formData = new FormData();
+  formData.append("project", JSON.stringify(project));
+  images.forEach((image) => {
+    formData.append("images", image);
+  });
+
+  const response = await fetch(`${BASE_URL}/v0/project`, {
+    method: "POST",
+    body: formData,
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create project");
+  }
+
+  return response.json();
+}
+
+export async function updateProject(
+  id: string,
+  projectData: Partial<ProjectForList>
+): Promise<ProjectForList> {
+  const response = await fetch(`${BASE_URL}/v0/project/${id}`, {
+    method: "PUT",
+    headers: DEFAULT_HEADERS,
+    body: JSON.stringify(projectData),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update project");
+  }
+
+  return response.json();
+}
+
+export async function deleteProject(id: string): Promise<void> {
+  const response = await fetch(`${BASE_URL}/v0/project/${id}`, {
+    method: "DELETE",
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to delete project");
+  }
+}
 
 function buildSearchParams(params: GetProjectsParams) {
   const {
@@ -68,79 +143,4 @@ function buildSearchParams(params: GetProjectsParams) {
     searchParams.set("corporateName", corporateName);
 
   return searchParams;
-}
-
-const DEFAULT_HEADERS = {
-  "Content-Type": "application/json",
-} as const;
-
-const CACHE_CONFIG = { revalidate: 3600 } as const;
-
-export async function getProjects(
-  params: GetProjectsParams
-): Promise<Page<Project>> {
-  const searchParams = buildSearchParams(params);
-
-  const response = await fetch(
-    `${BASE_URL}/v2/projects?${searchParams.toString()}`,
-    {
-      headers: DEFAULT_HEADERS,
-      next: CACHE_CONFIG,
-    }
-  );
-
-  if (!response.ok) {
-    throw new Error("Failed to fetch projects");
-  }
-
-  return response.json();
-}
-
-export async function createProject(
-  project: Project,
-  images: File[]
-): Promise<Project> {
-  const formData = new FormData();
-  formData.append("project", JSON.stringify(project));
-  images.forEach((image) => {
-    formData.append("images", image);
-  });
-
-  const response = await fetch(`${BASE_URL}/v0/project`, {
-    method: "POST",
-    body: formData,
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to create project");
-  }
-
-  return response.json();
-}
-
-export async function updateProject(
-  id: string,
-  projectData: Partial<Project>
-): Promise<Project> {
-  const response = await fetch(`${BASE_URL}/v0/project/${id}`, {
-    method: "PUT",
-    headers: DEFAULT_HEADERS,
-    body: JSON.stringify(projectData),
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to update project");
-  }
-
-  return response.json();
-}
-
-export async function deleteProject(id: string): Promise<void> {
-  const response = await fetch(`${BASE_URL}/v0/project/${id}`, {
-    method: "DELETE",
-  });
-
-  if (!response.ok) {
-    throw new Error("Failed to delete project");
-  }
 }

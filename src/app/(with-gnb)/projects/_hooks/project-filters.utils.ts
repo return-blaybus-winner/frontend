@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { Project } from "@/app/_models/project";
+import { ProjectForList } from "@/app/_models/project";
 import { ProjectSearchFilters } from "./use-project-search";
 
 export function filterAndSortProjects(
-  projects: Project[] | any[],
+  projects: ProjectForList[] | any[],
   filters: ProjectSearchFilters
-): Project[] {
+): ProjectForList[] {
   const { searchTerm, activeCategory, selectedFilters, sortBy } = filters;
 
   const filtered = projects.filter((project: any) => {
