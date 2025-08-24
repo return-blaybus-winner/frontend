@@ -7,6 +7,7 @@ import { CompanySignUpForm } from "@/app/(without-gnb)/signup/_components/compan
 import { ArtistSignUpForm } from "@/app/(without-gnb)/signup/_components/artist-signup-form";
 import { UserRole } from "@/app/_models/user";
 import SwitchCase from "@/components/utils/switch-case";
+import Image from "next/image";
 
 export default function SignupPage() {
   const [selectedUserType, setSelectedUserType] = useState<UserRole | null>(
@@ -31,7 +32,15 @@ export default function SignupPage() {
           }
         />
       </div>
-      <div className="w-[590px] rounded-xl"></div>
+      <div className="w-[590px] rounded-xl">
+        <Image
+          src="/images/signup/signup.png"
+          alt="회원가입 일러스트"
+          width={590}
+          height={400}
+          className="object-cover rounded-xl"
+        />
+      </div>
     </Container>
   );
 }

@@ -24,11 +24,12 @@ import {
   artistSchema,
 } from "@/app/(without-gnb)/signup/_schemas";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import SwitchCase from "@/components/utils/switch-case";
 import If from "@/components/utils/if";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@/app/_models/user";
+import PenIcon from "@/app/_icons/pen-icon";
 
 enum SignUpPhase {
   Basic = "basic",
@@ -37,16 +38,18 @@ enum SignUpPhase {
 
 export function ArtistSignUpForm() {
   const router = useRouter();
+  const [profilePreviewUrl, setProfilePreviewUrl] = useState<string>("");
+  const [portfolioPreviewUrl, setPortfolioPreviewUrl] = useState<string>("");
 
   const [phase, setPhase] = useState<SignUpPhase>(SignUpPhase.Basic);
 
   const form = useForm<ArtistFormValues>({
     resolver: zodResolver(artistSchema),
     defaultValues: {
-      profileImage: "",
+      profileImage: undefined,
       name: "",
       activeArea: "",
-      portfolioImage: "",
+      portfolioImage: undefined,
       portfolio: "",
     },
   });
@@ -90,8 +93,20 @@ export function ArtistSignUpForm() {
         <SwitchCase
           value={phase}
           caseBy={{
-            [SignUpPhase.Basic]: <BaseFormFields form={form} />,
-            [SignUpPhase.Portfolio]: <PortfolioFields form={form} />,
+            [SignUpPhase.Basic]: (
+              <BaseFormFields
+                form={form}
+                profilePreviewUrl={profilePreviewUrl}
+                setProfilePreviewUrl={setProfilePreviewUrl}
+              />
+            ),
+            [SignUpPhase.Portfolio]: (
+              <PortfolioFields
+                form={form}
+                portfolioPreviewUrl={portfolioPreviewUrl}
+                setPortfolioPreviewUrl={setPortfolioPreviewUrl}
+              />
+            ),
           }}
         />
 
@@ -126,7 +141,15 @@ interface FieldsProps {
   form: UseFormReturn<ArtistFormValues>;
 }
 
-function BaseFormFields({ form }: FieldsProps) {
+function BaseFormFields({
+  form,
+  profilePreviewUrl,
+  setProfilePreviewUrl,
+}: FieldsProps & {
+  profilePreviewUrl: string;
+  setProfilePreviewUrl: (url: string) => void;
+}) {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   return (
     <div className="space-y-5">
       <FormField
@@ -137,18 +160,41 @@ function BaseFormFields({ form }: FieldsProps) {
             <FormLabel>
               <span>프로필 이미지</span>
               <span className="text-red-500 pl-0.5">*</span>
+              <p className="text-xs text-gray-500 pl-2">
+                (jpg, png, webp 형식, 최대 5MB)
+              </p>
             </FormLabel>
-            {field.value && (
-              <Avatar className="size-[60px]">
-                <AvatarImage src={field.value} />
+            <div className="size-[60px] relative">
+              <Avatar
+                className="size-[60px] cursor-pointer hover:opacity-80"
+                onClick={() => fileInputRef.current?.click()}
+              >
+                <AvatarImage src={profilePreviewUrl} />
                 <AvatarFallback></AvatarFallback>
               </Avatar>
-            )}
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => fileInputRef.current?.click()}
+                className="absolute bottom-1 -right-1 rounded-full p-1"
+              >
+                <PenIcon />
+              </Button>
+            </div>
             <FormControl>
               <Input
-                placeholder="프로필 이미지 URL을 입력하세요"
-                className="mt-1"
-                {...field}
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
+                className="hidden"
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    field.onChange(file);
+                    const url = URL.createObjectURL(file);
+                    setProfilePreviewUrl(url);
+                  }
+                }}
               />
             </FormControl>
             <FormMessage />
@@ -192,7 +238,14 @@ function BaseFormFields({ form }: FieldsProps) {
   );
 }
 
-function PortfolioFields({ form }: FieldsProps) {
+function PortfolioFields({
+  form,
+  portfolioPreviewUrl,
+  setPortfolioPreviewUrl,
+}: FieldsProps & {
+  portfolioPreviewUrl: string;
+  setPortfolioPreviewUrl: (url: string) => void;
+}) {
   return (
     <div className="space-y-5">
       <FormField
@@ -201,15 +254,33 @@ function PortfolioFields({ form }: FieldsProps) {
         render={({ field }) => (
           <FormItem>
             <FormLabel>포트폴리오 대표 이미지</FormLabel>
+            {portfolioPreviewUrl && (
+              <div className="w-32 h-32 border rounded-lg overflow-hidden">
+                <img
+                  src={portfolioPreviewUrl}
+                  alt="Portfolio preview"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            )}
             <FormControl>
               <Input
-                placeholder="포트폴리오 이미지 URL을 입력하세요"
+                type="file"
+                accept="image/jpeg,image/png,image/webp"
                 className="mt-1"
-                {...field}
+                onChange={(e) => {
+                  const file = e.target.files?.[0];
+                  if (file) {
+                    field.onChange(file);
+                    const url = URL.createObjectURL(file);
+                    setPortfolioPreviewUrl(url);
+                  }
+                }}
               />
             </FormControl>
             <p className="text-sm text-gray-600">
-              자신을 가장 잘 드러낼 수 있는 대표 작업물을 올려주세요.
+              자신을 가장 잘 드러낼 수 있는 대표 작업물을 올려주세요. JPG, PNG,
+              WebP 형식, 최대 5MB
             </p>
             <FormMessage />
           </FormItem>

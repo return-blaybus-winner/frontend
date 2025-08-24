@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useState } from "react";
 import {
   Form,
   FormControl,
@@ -19,11 +20,12 @@ import { UserRole } from "@/app/_models/user";
 
 export function CompanySignUpForm() {
   const router = useRouter();
+  const [previewUrl, setPreviewUrl] = useState<string>("");
 
   const form = useForm<CompanyFormValues>({
     resolver: zodResolver(companySchema),
     defaultValues: {
-      profileImage: "",
+      profileImage: undefined,
       name: "",
       businessRegistrationNumber: "",
     },
@@ -55,20 +57,31 @@ export function CompanySignUpForm() {
                   <span>회사 로고 / 대표 이미지</span>
                   <span className="text-red-500 pl-0.5">*</span>
                 </FormLabel>
-                {field.value && (
+                {previewUrl && (
                   <Avatar className="size-[60px]">
-                    <AvatarImage src={field.value} />
+                    <AvatarImage src={previewUrl} />
                     <AvatarFallback></AvatarFallback>
                   </Avatar>
                 )}
 
                 <FormControl>
                   <Input
-                    placeholder="회사 로고 / 대표 이미지 URL을 입력하세요"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
                     className="mt-1"
-                    {...field}
+                    onChange={(e) => {
+                      const file = e.target.files?.[0];
+                      if (file) {
+                        field.onChange(file);
+                        const url = URL.createObjectURL(file);
+                        setPreviewUrl(url);
+                      }
+                    }}
                   />
                 </FormControl>
+                <p className="text-sm text-gray-600">
+                  JPG, PNG, WebP 형식, 최대 5MB
+                </p>
                 <FormMessage />
               </FormItem>
             )}
