@@ -30,6 +30,7 @@ import If from "@/components/utils/if";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@/app/_models/user";
 import PenIcon from "@/app/_icons/pen-icon";
+import { LOCATION_OPTIONS } from "@/app/(with-gnb)/projects/_constants/projects";
 
 enum SignUpPhase {
   Basic = "basic",
@@ -322,23 +323,11 @@ function ActiveAreaSelect({ value, onChange }: ActiveAreaSelectProps) {
         </SelectTrigger>
       </FormControl>
       <SelectContent>
-        <SelectItem value="seoul">서울</SelectItem>
-        <SelectItem value="gyeonggi">경기</SelectItem>
-        <SelectItem value="incheon">인천</SelectItem>
-        <SelectItem value="busan">부산</SelectItem>
-        <SelectItem value="daegu">대구</SelectItem>
-        <SelectItem value="daejeon">대전</SelectItem>
-        <SelectItem value="gwangju">광주</SelectItem>
-        <SelectItem value="ulsan">울산</SelectItem>
-        <SelectItem value="sejong">세종</SelectItem>
-        <SelectItem value="gangwon">강원</SelectItem>
-        <SelectItem value="chungbuk">충북</SelectItem>
-        <SelectItem value="chungnam">충남</SelectItem>
-        <SelectItem value="jeonbuk">전북</SelectItem>
-        <SelectItem value="jeonnam">전남</SelectItem>
-        <SelectItem value="gyeongbuk">경북</SelectItem>
-        <SelectItem value="gyeongnam">경남</SelectItem>
-        <SelectItem value="jeju">제주</SelectItem>
+        {LOCATION_OPTIONS.map((option) => (
+          <SelectItem key={option.code} value={option.code}>
+            {option.description}
+          </SelectItem>
+        ))}
       </SelectContent>
     </Select>
   );
