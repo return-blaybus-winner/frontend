@@ -31,6 +31,8 @@ import { useRouter } from "next/navigation";
 import { UserRole } from "@/app/_models/user";
 import PenIcon from "@/app/_icons/pen-icon";
 import { LOCATION_OPTIONS } from "@/app/(with-gnb)/projects/_constants/projects";
+import { ArtistSignUpDto } from "@/app/_models/artist";
+import { signUpArtist } from "@/app/_api/artists";
 
 enum SignUpPhase {
   Basic = "basic",
@@ -55,16 +57,39 @@ export function ArtistSignUpForm() {
     },
   });
 
-  const onSubmit = (values: ArtistFormValues) => {
-    if (phase === SignUpPhase.Basic) {
-      setPhase(SignUpPhase.Portfolio);
-      return;
-    }
-    console.log("Artist sign up:", values);
-    // 실제 회원가입 로직은 여기에 구현
+  const onSubmit = async (values: ArtistFormValues) => {
+  if (phase === SignUpPhase.Basic) {
+    setPhase(SignUpPhase.Portfolio);
+    return;
+  }
 
+  try {
+    const selectedRegion = LOCATION_OPTIONS.find(option => option.code === values.activeArea);
+    const artistData: ArtistSignUpDto = {
+      nickName: values.name,
+      portfolioUrl: values.portfolio || undefined,
+       regions: selectedRegion ? [{
+        code: selectedRegion.code,          // "26000"
+        name: selectedRegion.description    // "부산광역시"  
+      }] : []
+    };
+    console.log(artistData.regions);
+
+    // API 호출
+    const result = await signUpArtist(
+      artistData,
+      values.profileImage,
+      values.portfolioImage
+    );
+
+    console.log("Artist sign up success:", result);
     router.replace("/signup/success/?from=" + UserRole.ARTIST);
-  };
+    
+  } catch (error) {
+    console.error("Artist sign up failed:", error);
+    alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+  }
+};
 
   return (
     <Form {...form}>
