@@ -18,6 +18,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@/app/_models/user";
 import PenIcon from "@/app/_icons/pen-icon";
+import { signUpCorporate } from "@/app/_api/corporate";
+import { CorporateSignUpDto } from "@/app/_models/corporate";
 
 export function CompanySignUpForm() {
   const router = useRouter();
@@ -33,9 +35,28 @@ export function CompanySignUpForm() {
     },
   });
 
-  const onSubmit = (values: CompanyFormValues) => {
+  const onSubmit = async (values: CompanyFormValues) => {
     console.log("Company sign up:", values);
     // 실제 회원가입 로직은 여기에 구현
+    try {
+        const corporateData: CorporateSignUpDto = {
+          corporateName: values.name,
+          registrationNumber: values.businessRegistrationNumber
+        };
+      
+        // API 호출
+        const result = await signUpCorporate(
+          corporateData,
+          values.profileImage,
+        );
+    
+        console.log("Corporate sign up success:", result);
+        router.replace("/signup/success/?from=" + UserRole.ARTIST);
+        
+      } catch (error) {
+        console.error("Corporate sign up failed:", error);
+        alert("회원가입에 실패했습니다. 다시 시도해주세요.");
+      }
     router.replace("/signup/success/?from=" + UserRole.CORPORATE);
   };
 
