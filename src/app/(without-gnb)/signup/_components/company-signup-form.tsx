@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import {
   Form,
   FormControl,
@@ -17,9 +17,11 @@ import { companySchema, type CompanyFormValues } from "../_schemas";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useRouter } from "next/navigation";
 import { UserRole } from "@/app/_models/user";
+import PenIcon from "@/app/_icons/pen-icon";
 
 export function CompanySignUpForm() {
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const [previewUrl, setPreviewUrl] = useState<string>("");
 
   const form = useForm<CompanyFormValues>({
@@ -54,21 +56,35 @@ export function CompanySignUpForm() {
             render={({ field }) => (
               <FormItem>
                 <FormLabel>
-                  <span>회사 로고 / 대표 이미지</span>
+                  <span>프로필 이미지</span>
                   <span className="text-red-500 pl-0.5">*</span>
+                  <p className="text-xs text-gray-500 pl-2">
+                    (jpg, png, webp 형식, 최대 5MB)
+                  </p>
                 </FormLabel>
-                {previewUrl && (
-                  <Avatar className="size-[60px]">
+                <div className="size-[60px] relative">
+                  <Avatar
+                    className="size-[60px] cursor-pointer hover:opacity-80"
+                    onClick={() => fileInputRef.current?.click()}
+                  >
                     <AvatarImage src={previewUrl} />
                     <AvatarFallback></AvatarFallback>
                   </Avatar>
-                )}
-
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => fileInputRef.current?.click()}
+                    className="absolute bottom-1 -right-1 rounded-full p-1"
+                  >
+                    <PenIcon />
+                  </Button>
+                </div>
                 <FormControl>
                   <Input
+                    ref={fileInputRef}
                     type="file"
                     accept="image/jpeg,image/png,image/webp"
-                    className="mt-1"
+                    className="hidden"
                     onChange={(e) => {
                       const file = e.target.files?.[0];
                       if (file) {
@@ -79,9 +95,6 @@ export function CompanySignUpForm() {
                     }}
                   />
                 </FormControl>
-                <p className="text-sm text-gray-600">
-                  JPG, PNG, WebP 형식, 최대 5MB
-                </p>
                 <FormMessage />
               </FormItem>
             )}
