@@ -68,10 +68,7 @@ export function ArtistSignUpForm() {
     const artistData: ArtistSignUpDto = {
       nickName: values.name,
       portfolioUrl: values.portfolio || undefined,
-       regions: selectedRegion ? [{
-        code: selectedRegion.code,          // "26000"
-        name: selectedRegion.description    // "부산광역시"  
-      }] : []
+      regions: [values.activeArea]
     };
     console.log(artistData.regions);
 
