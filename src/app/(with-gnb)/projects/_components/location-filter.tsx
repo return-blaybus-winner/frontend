@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 export default function LocationFilter() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const locationParam = searchParams.get("location") || "";
+  const locationParam = searchParams.get("projectRegion") || "";
   const locationParams = locationParam ? locationParam.split(",") : [];
 
   const handleLocationSelect = (code: string) => {
@@ -16,13 +16,13 @@ export default function LocationFilter() {
         (location) => location !== code
       );
       if (updatedLocations.length > 0) {
-        params.set("location", updatedLocations.join(","));
+        params.set("projectRegion", updatedLocations.join(","));
       } else {
-        params.delete("location");
+        params.delete("projectRegion");
       }
     } else {
       const updatedLocations = [...locationParams, code];
-      params.set("location", updatedLocations.join(","));
+      params.set("projectRegion", updatedLocations.join(","));
     }
 
     const url = `?${params.toString()}`.replace(/%2C/g, ",");

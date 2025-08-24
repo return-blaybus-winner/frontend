@@ -33,7 +33,10 @@ export default function ArtistsSidebar() {
             분야
           </AccordionTrigger>
           <AccordionContent>
-            <CategoryFilter categories={artCategories ?? []} />
+            <CategoryFilter
+              categories={artCategories ?? []}
+              paramName="artCategories"
+            />
           </AccordionContent>
         </AccordionItem>
 

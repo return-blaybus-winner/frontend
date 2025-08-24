@@ -2,7 +2,7 @@ import { BASE_URL } from "@/app/_constants/api";
 import { Category } from "../_models/category";
 
 export async function getProjectCategories(): Promise<Category[]> {
-  const response = await fetch(`${BASE_URL}/categories/project/tree`, {
+  const response = await fetch(`${BASE_URL}/v0/categories/project/tree`, {
     headers: {
       "Content-Type": "application/json",
     },

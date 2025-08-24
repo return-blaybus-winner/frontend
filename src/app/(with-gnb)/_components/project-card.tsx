@@ -12,20 +12,27 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import Link from "next/link";
 
 interface Props {
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  project: Project | any; // Adjust type as needed
+  project: Project;
   className?: string;
 }
 
 export default function ProjectCard({ project, className }: Props) {
   return (
-    <Link href={`/projects/1`}>
+    <Link href={`/projects/${project.id}`}>
       <Card className={cn("pt-0  border-[#f1f1f5] cursor-pointer", className)}>
         <div className="relative p-2 pb-0">
-          <div className="w-full h-48 bg-gradient-to-br from-purple-400 via-pink-400 to-blue-400 rounded-[10px] overflow-hidden"></div>
+          <div className="w-full h-48 rounded-[10px] overflow-hidden relative">
+            <Image
+              src={project.thumbnail}
+              alt={project.title}
+              className="object-cover absolute"
+              fill
+            />
+          </div>
           <Button
             size="icon"
             className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full border-0 bg-gray-950/20 backdrop-blur-[10px]"
@@ -33,7 +40,7 @@ export default function ProjectCard({ project, className }: Props) {
             <HeartIcon
               className={cn(
                 "text-[#eeeeee]",
-                project.liked && "text-[#FF4726] fill-[#FF4726]"
+                project.isBookmarked && "text-[#FF4726] fill-[#FF4726]"
               )}
             />
           </Button>
@@ -42,10 +49,14 @@ export default function ProjectCard({ project, className }: Props) {
           <CardHeader>
             <div className="flex items-center gap-1 mb-4">
               <Avatar className="size-5">
-                <AvatarImage />
-                <AvatarFallback className="text-xs">D</AvatarFallback>
+                <AvatarImage src={project.organizationProfileImage} />
+                <AvatarFallback className="text-xs">
+                  {project.organizationName.slice(0, 1)}
+                </AvatarFallback>
               </Avatar>
-              <span className="text-sm text-gray-600">DESIGN</span>
+              <span className="text-sm text-gray-600">
+                {project.organizationName}
+              </span>
             </div>
             <CardTitle>{project.title}</CardTitle>
           </CardHeader>
@@ -55,15 +66,18 @@ export default function ProjectCard({ project, className }: Props) {
         </div>
         <CardFooter>
           <div className="flex items-center w-full flex-wrap gap-2">
-            <Badge className="text-[13px] rounded-full">{`모집 마감 D - 12`}</Badge>
+            <Badge className="text-[13px] rounded-full">{`모집 마감 D - ${Math.ceil(
+              (new Date(project.projectApplyEndDate).getTime() - Date.now()) /
+                (1000 * 60 * 60 * 24)
+            )}`}</Badge>
             <Badge
               variant={"secondary"}
               className="text-[13px] rounded-full"
-            >{`2인 모집`}</Badge>
+            >{`${project.maxRecruitNumber}인 모집`}</Badge>
             <Badge
               variant={"secondary"}
               className="text-[13px] rounded-full"
-            >{`강동구`}</Badge>
+            >{`${project.regionLevel1}`}</Badge>
           </div>
         </CardFooter>
       </Card>

@@ -20,30 +20,15 @@ export default function ProjectsSidebar() {
   const { data: projectCategories } = useProjectCategories();
   const { data: artCategories } = useArtCategories();
 
-  const categoryParams = searchParams.get("category") || "";
+  const artCategoryParams = searchParams.get("artCategories") || "";
+  const projectCategoryParams = searchParams.get("projectCategories") || "";
 
   function hasArtCategories() {
-    if (!artCategories) return false;
-    const codes = categoryParams.split(",");
-    const artCategoryCodes = [
-      ...artCategories.flatMap((cat) => cat.code),
-      ...artCategories.flatMap((cat) =>
-        cat.children.map((child) => child.code)
-      ),
-    ];
-    return codes.some((code) => artCategoryCodes.includes(code));
+    return artCategoryParams.length > 0;
   }
 
   function hasProjectCategories() {
-    if (!projectCategories) return false;
-    const codes = categoryParams.split(",");
-    const projectCategoryCodes = [
-      ...projectCategories.flatMap((cat) => cat.code),
-      ...projectCategories.flatMap((cat) =>
-        cat.children.map((child) => child.code)
-      ),
-    ];
-    return codes.some((code) => projectCategoryCodes.includes(code));
+    return projectCategoryParams.length > 0;
   }
 
   const keys = Array.from(searchParams.keys());
@@ -74,7 +59,7 @@ export default function ProjectsSidebar() {
             분야
           </AccordionTrigger>
           <AccordionContent>
-            <CategoryFilter categories={artCategories ?? []} />
+            <CategoryFilter categories={artCategories ?? []} paramName="artCategories" />
           </AccordionContent>
         </AccordionItem>
 
@@ -83,7 +68,7 @@ export default function ProjectsSidebar() {
             유형
           </AccordionTrigger>
           <AccordionContent>
-            <CategoryFilter categories={projectCategories ?? []} />
+            <CategoryFilter categories={projectCategories ?? []} paramName="projectCategories" />
           </AccordionContent>
         </AccordionItem>
 

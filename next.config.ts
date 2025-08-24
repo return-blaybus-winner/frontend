@@ -8,6 +8,15 @@ const nextConfig: NextConfig = {
       destination: `${process.env.NEXT_PUBLIC_BASE_URL}/api/:path*`,
     },
   ],
+  images: {
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "example.com",
+        port: "",
+      },
+    ],
+  },
   async headers() {
     return [
       {

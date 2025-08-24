@@ -15,7 +15,7 @@ export default function Pagination({
 
   return (
     <div className="flex items-center justify-center gap-2">
-      {currentPage > 1 && (
+      {currentPage > 0 && (
         <button
           onClick={() => onPageChange(currentPage - 1)}
           className="text-gray-800 hover:text-gray-900 px-2"
@@ -27,11 +27,11 @@ export default function Pagination({
       {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
         let pageNum;
         if (totalPages <= 5) {
-          pageNum = i + 1;
-        } else if (currentPage <= 3) {
-          pageNum = i + 1;
-        } else if (currentPage >= totalPages - 2) {
-          pageNum = totalPages - 4 + i;
+          pageNum = i;
+        } else if (currentPage <= 2) {
+          pageNum = i;
+        } else if (currentPage >= totalPages - 3) {
+          pageNum = totalPages - 5 + i;
         } else {
           pageNum = currentPage - 2 + i;
         }
@@ -46,12 +46,12 @@ export default function Pagination({
                 : "text-gray-700 hover:text-gray-900"
             }`}
           >
-            {pageNum}
+            {pageNum + 1}
           </button>
         );
       })}
 
-      {currentPage < totalPages && (
+      {currentPage < totalPages - 1 && (
         <button
           onClick={() => onPageChange(currentPage + 1)}
           className="text-gray-800 hover:text-gray-900 px-2"

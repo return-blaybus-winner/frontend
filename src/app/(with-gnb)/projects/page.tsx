@@ -1,98 +1,74 @@
 "use client";
 
-import { useMemo, useEffect, Suspense } from "react";
+import { Suspense } from "react";
 import ProjectsSidebar from "./_components/projects-sidebar";
 import ProjectTabs from "./_components/project-tabs";
 import FiltersBar from "./_components/filters-bar";
 import ProjectList from "../_components/project-list";
 import Pagination from "./_components/pagination";
-import { mockProjects } from "./_constants/mock-data";
-import { useProjectSearch } from "./_hooks/use-project-search";
-import { useProjectUI } from "./_hooks/use-project-ui";
-import {
-  filterAndSortProjects,
-  paginateProjects,
-} from "./_hooks/project-filters.utils";
-import { ITEMS_PER_PAGE } from "./_constants/projects";
 import Container from "@/app/_components/container";
-import { Project } from "@/app/_models/project";
+import { useProjects } from "@/app/_hooks/use-projects";
+import { useSearchParams, useRouter } from "next/navigation";
 
-export default function ProjectsPage() {
-  const searchHook = useProjectSearch();
-  const uiHook = useProjectUI();
+function ProjectsContent() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
 
-  const projects = mockProjects;
-  const isLoading = false;
-  const error = null;
+  const artCategories = searchParams.get("artCategories");
+  const projectCategories = searchParams.get("projectCategories");
+  const corporateType = searchParams.get("corporateType");
+  const maxRecruitNumber = searchParams.get("maxRecruitNumber");
+  const minRecruitNumber = searchParams.get("minRecruitNumber");
+  const page = searchParams.get("page");
+  const projectRegion = searchParams.get("projectRegion");
+  const period = searchParams.get("period");
+  const projectStatus = searchParams.get("projectStatus");
 
-  const searchParams = searchHook.getSearchParams();
-
-  const filteredAndSortedProjects = useMemo(() => {
-    if (!projects.length || isLoading || error) return [];
-    return filterAndSortProjects(projects, searchParams);
-  }, [projects, searchParams, isLoading, error]);
-
-  const { paginatedItems: currentProjects, totalPages } = useMemo(() => {
-    return paginateProjects(
-      filteredAndSortedProjects,
-      uiHook.currentPage,
-      ITEMS_PER_PAGE
-    );
-  }, [filteredAndSortedProjects, uiHook.currentPage]);
-
-  const { resetPage } = uiHook;
-  useEffect(() => {
-    resetPage();
-  }, [
-    searchHook.searchTerm,
-    searchHook.activeCategory,
-    searchHook.selectedFilters,
-    resetPage,
-  ]);
-
-  if (error) {
-    return (
-      <Container className="mt-10">
-        <div className="flex items-center justify-center min-h-[400px]">
-          <div className="text-center">
-            <h2 className="text-xl font-semibold text-red-600 mb-2">
-              오류가 발생했습니다
-            </h2>
-            <p className="text-gray-600">
-              프로젝트를 불러오는 중 문제가 발생했습니다.
-            </p>
-          </div>
-        </div>
-      </Container>
-    );
-  }
+  const projects = useProjects({
+    page,
+    projectStatus,
+    corporateType,
+    maxRecruitNumber,
+    minRecruitNumber,
+    period,
+    artCategories: artCategories ? artCategories.split(",") : [],
+    projectCategories: projectCategories ? projectCategories.split(",") : [],
+    projectRegion: projectRegion ? [projectRegion] : [],
+  });
 
   return (
-    <Container className="mt-10">
-      <Suspense>
-        <div className="flex gap-20">
-          <ProjectsSidebar />
+    <div className="flex gap-20">
+      <ProjectsSidebar />
 
-          <div className="flex-1">
-            <ProjectTabs />
-            <FiltersBar />
+      <div className="flex-1">
+        <ProjectTabs />
+        <FiltersBar />
 
-            <div className="mt-4">
-              <ProjectList
-                projects={currentProjects as Project[]}
-                isLoading={isLoading}
-              />
+        <div className="mt-4">
+          <ProjectList projects={projects.data?.content ?? []} />
 
-              {!isLoading && totalPages > 1 && (
-                <Pagination
-                  currentPage={uiHook.currentPage}
-                  totalPages={totalPages}
-                  onPageChange={uiHook.setCurrentPage}
-                />
-              )}
-            </div>
-          </div>
+          {projects.data && (
+            <Pagination
+              currentPage={Number(page)}
+              totalPages={projects.data.page.totalPages}
+              onPageChange={(newPage: number) => {
+                const newParams = new URLSearchParams(searchParams);
+                newParams.set("page", newPage.toString());
+                router.push(`?${newParams.toString()}`, { scroll: false });
+              }}
+            />
+          )}
         </div>
+      </div>
+    </div>
+  );
+}
+
+export default function ProjectsPage() {
+  return (
+    <Container className="mt-10">
+      <Suspense fallback={<div>Loading...</div>}>
+        <ProjectsContent />
       </Suspense>
     </Container>
   );

@@ -12,11 +12,15 @@ import { useRouter, useSearchParams } from "next/navigation";
 
 interface CategoryFilterProps {
   categories: Category[];
+  paramName: "artCategories" | "projectCategories";
 }
-export default function CategoryFilter({ categories }: CategoryFilterProps) {
+export default function CategoryFilter({
+  categories,
+  paramName,
+}: CategoryFilterProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const categoryParam = searchParams.get("category") || "";
+  const categoryParam = searchParams.get(paramName) || "";
   const categoryParams = categoryParam ? categoryParam.split(",") : [];
 
   const handleCategorySelectAll = (category: Category) => {
@@ -44,9 +48,9 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
     }
 
     if (updatedCategories.length > 0) {
-      newParams.set("category", updatedCategories.join(","));
+      newParams.set(paramName, updatedCategories.join(","));
     } else {
-      newParams.delete("category");
+      newParams.delete(paramName);
     }
 
     const url = `?${newParams.toString()}`.replace(/%2C/g, ",");
@@ -61,17 +65,19 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
     if (categoryParams.includes(code)) {
       const updatedCategories = categoryParams.filter((cat) => cat !== code);
       if (updatedCategories.length > 0) {
-        params.set("category", updatedCategories.join(","));
+        params.set(paramName, updatedCategories.join(","));
       } else {
-        params.delete("category");
+        params.delete(paramName);
       }
     } else {
       const updatedCategories = [...categoryParams, code];
-      params.set("category", updatedCategories.join(","));
+      params.set(paramName, updatedCategories.join(","));
     }
 
     const url = `?${params.toString()}`.replace(/%2C/g, ",");
-    router.push(url);
+    router.push(url, {
+      scroll: false,
+    });
   };
 
   const isCategoryAllSelected = (category: Category) =>
@@ -88,11 +94,11 @@ export default function CategoryFilter({ categories }: CategoryFilterProps) {
   };
 
   const computedValues = () => {
-    const newValues = categoryParams;
+    const newValues = [...categoryParams];
 
-    newValues.forEach((code) => {
+    categoryParams.forEach((code) => {
       const parent = getParent(code);
-      if (parent) {
+      if (parent && !newValues.includes(parent.code)) {
         newValues.push(parent.code);
       }
     });

@@ -2,19 +2,21 @@
 
 import SignInPopover from "@/app/(with-gnb)/_components/gnb/sign-in-popover";
 import UserDropdown from "@/app/(with-gnb)/_components/gnb/user-dropdown";
+import { useUser } from "@/app/_hooks/use-user";
 import ChatIcon from "@/app/_icons/chat-icon";
+import { UserRole } from "@/app/_models/user";
 import { Button } from "@/components/ui/button";
 import If from "@/components/utils/if";
 import Link from "next/link";
 
 export default function UserMenu() {
-  const isLoggedIn = false; // Replace with actual authentication logic
-  const isCompany = true; // Replace with actual company logic
+  const user = useUser();
+  const isCorporate = user.data?.role === UserRole.CORPORATE;
 
   return (
     <>
-      <If condition={isLoggedIn}>
-        <If condition={isCompany}>
+      <If condition={!!user.data?.role}>
+        <If condition={isCorporate}>
           <Button
             variant="brand"
             size="default"
@@ -31,7 +33,7 @@ export default function UserMenu() {
           <UserDropdown />
         </div>
       </If>
-      <If condition={!isLoggedIn}>
+      <If condition={!user.data?.role}>
         <SignInPopover />
       </If>
     </>
