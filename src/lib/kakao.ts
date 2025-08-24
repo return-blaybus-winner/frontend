@@ -71,7 +71,7 @@ class KakaoAuth {
       }
       if (process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI) {
         window.Kakao.Auth.authorize({
-          redirectUri: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}?redirectUrl=${window.location.href}/api/auth/kakao/success`,
+          redirectUri: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
         });
       }
     });
