@@ -5,7 +5,7 @@ declare global {
       init: (appKey: string) => void;
       isInitialized: () => boolean;
       Auth: {
-        authorize: (options: { redirectUri: string }) => void;
+        authorize: (options: { redirectUri: string; state: string }) => void;
         logout: (callback?: () => void) => void;
         getAccessToken: () => string | null;
       };
@@ -72,6 +72,7 @@ class KakaoAuth {
       if (process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI) {
         window.Kakao.Auth.authorize({
           redirectUri: `${process.env.NEXT_PUBLIC_KAKAO_REDIRECT_URI}`,
+          state: `${window.location.href}/api/auth/kakao/success`,
         });
       }
     });
