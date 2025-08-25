@@ -5,7 +5,7 @@ export async function signUpArtist(
   artistData: ArtistSignUpDto,
   profileImage?: File,
   portfolioThumbnail?: File
-): Promise<any> {
+): Promise<unknown> {
   const formData = new FormData();
   
   // JSON 데이터를 Blob으로 변환해서 추가 (Spring @RequestPart("artist") 부분)

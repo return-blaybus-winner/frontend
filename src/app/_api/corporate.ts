@@ -4,7 +4,7 @@ import { CorporateSignUpDto } from "@/app/_models/corporate";
 export async function signUpCorporate(
   corporateData: CorporateSignUpDto,
   profileImage?: File,
-): Promise<any> {
+): Promise<unknown> {
   const formData = new FormData();
   
   formData.append("artist", new Blob([JSON.stringify(corporateData)], {
