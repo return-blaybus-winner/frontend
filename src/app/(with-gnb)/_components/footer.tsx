@@ -27,6 +27,11 @@ export default function Footer() {
             사이트 내 모든 예술가 및 외회 기업 정보의 무단 수집·활용을 엄격히
             금지합니다.
           </p>
+          <p>
+            3D Elements Pack 3D Shapes by Екатерина Коршунова, licensed under CC
+            BY 4.0 (https://creativecommons.org/licenses/by/4.0/) Source:
+            https://www.figma.com/community/file/1333662757253724537/3d-elements-pack-3d-shapes
+          </p>
         </div>
 
         {/* 하단 링크와 소셜 아이콘 */}
